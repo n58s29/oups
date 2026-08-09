@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E2B24">
+<title>Oups.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap');
+
+:root{
+  --velvet:#1E2B24; --velvet-2:#26362D; --velvet-3:#2F4237;
+  --bone:#EDE6D6; --dim:#B9B4A4; --brass:#C2A15A; --brass-2:#8f7a48;
+  --mum:#D96A45; --sage:#8FA895;
+  --line:rgba(237,230,214,.13);
+  --r:14px;
+  --display:'Fraunces', Georgia, serif;
+  --ui:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --top:56px; --bot:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html,body{height:100%}
+body{
+  background:var(--velvet); color:var(--bone); font-family:var(--ui);
+  font-size:16px; line-height:1.45; overscroll-behavior-y:none;
+}
+button,input{font:inherit;color:inherit}
+
+/* ---------- shell ---------- */
+#top{
+  position:fixed;top:0;left:0;right:0;height:calc(var(--top) + env(safe-area-inset-top));
+  padding:env(safe-area-inset-top) 14px 0;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(30,43,36,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);z-index:40;
+}
+#top .mark{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:-.02em}
+#top .mark i{color:var(--brass);font-style:normal}
+#top .meta{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
+.pill{border:1px solid var(--brass-2);color:var(--brass);border-radius:999px;padding:3px 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.pill.live{border-color:var(--sage);color:var(--sage)}
+.pill.simu{border-color:var(--mum);color:var(--mum)}
+
+main{
+  padding:calc(var(--top) + env(safe-area-inset-top) + 14px) 14px calc(var(--bot) + env(safe-area-inset-bottom) + 24px);
+  max-width:620px;margin:0 auto;
+}
+#nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:40;
+  padding-bottom:env(safe-area-inset-bottom);
+  display:flex;background:rgba(30,43,36,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);
+}
+#nav button{
+  flex:1;background:none;border:none;padding:11px 4px 12px;cursor:pointer;
+  color:var(--dim);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+#nav button .ico{font-size:19px;line-height:1}
+#nav button.on{color:var(--brass)}
+#nav[hidden]{display:none}
+
+/* ---------- blocs ---------- */
+h1{font-family:var(--display);font-weight:900;font-size:clamp(46px,15vw,74px);line-height:.92;letter-spacing:-.03em}
+h1 i{color:var(--brass);font-style:normal}
+h2{font-family:var(--display);font-weight:600;font-size:21px;margin-bottom:2px}
+.sub{color:var(--dim);font-size:13px;margin-bottom:16px}
+.card{background:var(--velvet-2);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card.gold{background:var(--velvet-3);box-shadow:inset 0 0 0 1px var(--brass-2)}
+.row{display:flex;align-items:center;gap:10px}
+.row.wrap{flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.mut{color:var(--dim);font-size:13px}
+.big{font-family:var(--display);font-size:20px;font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+.brass{color:var(--brass)}.mumc{color:var(--mum)}.sagec{color:var(--sage)}
+.sep{height:1px;background:var(--line);margin:12px 0}
+.spacer{height:8px}
+
+/* ---------- boutons ---------- */
+.b{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:12px 18px;border:none;border-radius:12px;
+  background:var(--velvet-3);color:var(--bone);font-size:15px;font-weight:500;cursor:pointer;
+}
+.b:active{transform:scale(.985)}
+.b.or{background:var(--brass);color:#1a2620;font-weight:700}
+.b.mort{background:rgba(217,106,69,.16);color:var(--mum)}
+.b.ghost{background:none;box-shadow:inset 0 0 0 1px var(--line);color:var(--dim)}
+.b.full{display:flex;width:100%}
+.b.sm{min-height:38px;padding:8px 14px;font-size:14px;border-radius:10px}
+.b:disabled{opacity:.4;pointer-events:none}
+input.f{
+  width:100%;min-height:48px;padding:12px 14px;border:none;border-radius:12px;
+  background:var(--velvet-3);box-shadow:inset 0 0 0 1px var(--line);
+}
+input.f:focus{outline:none;box-shadow:inset 0 0 0 1px var(--brass)}
+input.f::placeholder{color:rgba(185,180,164,.45)}
+input.code{text-align:center;font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:.35em;text-transform:uppercase}
+
+/* ---------- avatars & fiches ---------- */
+.av{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--velvet-3);filter:grayscale(.35) sepia(.12)}
+.av.ph{display:flex;align-items:center;justify-content:center;color:var(--brass);font-family:var(--display);font-size:18px;filter:none}
+.av.lg{width:62px;height:62px;font-size:26px}
+.av.dead{filter:grayscale(1) contrast(.9)}
+.nm{font-family:var(--display);font-size:17px;font-weight:600;line-height:1.15}
+.ds{font-size:11.5px;color:var(--dim);font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.tile{background:var(--velvet-2);border-radius:12px;padding:12px;margin-bottom:8px;position:relative;overflow:hidden}
+.tile.dead{background:rgba(217,106,69,.08);box-shadow:inset 0 0 0 1px rgba(217,106,69,.35)}
+.tile .stamp{
+  position:absolute;top:8px;right:-6px;transform:rotate(8deg);
+  font-family:var(--display);font-weight:900;font-style:italic;font-size:14px;color:var(--mum);
+  border:2px solid var(--mum);border-radius:6px;padding:1px 8px;opacity:.9;
+}
+.tag{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--velvet-3);color:var(--dim);white-space:nowrap}
+.tag.b{background:rgba(194,161,90,.16);color:var(--brass)}
+.tag.m{background:rgba(217,106,69,.16);color:var(--mum)}
+.tag.s{background:rgba(143,168,149,.16);color:var(--sage)}
+
+/* ---------- progression ---------- */
+.bar{height:6px;border-radius:999px;background:var(--velvet-3);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brass);transition:width .3s}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--velvet-3)}
+.dot.on{background:var(--sage)}
+
+/* ---------- sticky action ---------- */
+.sticky{
+  position:fixed;left:0;right:0;bottom:calc(var(--bot) + env(safe-area-inset-bottom));
+  padding:10px 14px 12px;z-index:35;
+  background:linear-gradient(to top,rgba(30,43,36,.98) 55%,rgba(30,43,36,0));
+}
+.sticky .in{max-width:620px;margin:0 auto;display:flex;gap:8px}
+
+/* ---------- sheet ---------- */
+#veil{position:fixed;inset:0;background:rgba(8,12,10,.7);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+#veil.on{opacity:1;pointer-events:auto}
+#sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:61;
+  max-height:92vh;overflow:auto;-webkit-overflow-scrolling:touch;
+  background:var(--velvet-2);border-radius:20px 20px 0 0;
+  padding:8px 16px calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(102%);transition:transform .26s cubic-bezier(.3,.8,.3,1);
+}
+#sheet.on{transform:none}
+.handle{width:40px;height:4px;border-radius:999px;background:var(--line);margin:6px auto 14px}
+.res{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:none;padding:11px 4px;cursor:pointer;border-bottom:1px solid var(--line)}
+.res:last-child{border-bottom:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chip{background:var(--velvet-3);border:none;border-radius:999px;padding:10px 14px;font-size:14px;cursor:pointer;min-height:42px}
+.chip.on{background:var(--brass);color:#1a2620;font-weight:700}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed;left:50%;bottom:calc(var(--bot) + env(safe-area-inset-bottom) + 74px);
+  transform:translate(-50%,20px);z-index:80;max-width:92vw;
+  background:var(--brass);color:#1a2620;font-weight:600;font-size:14px;
+  padding:11px 18px;border-radius:999px;text-align:center;
+  opacity:0;pointer-events:none;transition:all .25s;
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast.bad{background:var(--mum);color:var(--bone)}
+
+.empty{text-align:center;color:var(--dim);font-size:14px;padding:30px 12px}
+.empty .g{font-family:var(--display);font-size:19px;color:var(--bone);margin-bottom:5px}
+ol.rules{padding-left:20px;display:flex;flex-direction:column;gap:11px;font-size:14.5px}
+ol.rules li::marker{color:var(--brass);font-family:var(--display);font-weight:700}
+ol.rules b{color:var(--brass);font-weight:600}
+footer{text-align:center;color:var(--dim);font-size:11.5px;padding:18px 0 4px}
+footer button{background:none;border:none;color:var(--dim);text-decoration:underline;cursor:pointer;font-size:11.5px;padding:6px}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="mark">Oups<i>.</i></div>
+  <div class="meta" id="topMeta"></div>
+</header>
+
+<main id="app"></main>
+
+<nav id="nav" hidden>
+  <button data-act="tab" data-tab="bids"><span class="ico">⚖</span>Enchères</button>
+  <button data-act="tab" data-tab="stable"><span class="ico">✝</span>Écurie</button>
+  <button data-act="tab" data-tab="rank"><span class="ico">☰</span>Classement</button>
+</nav>
+
+<div id="veil" data-act="closesheet"></div>
+<div id="sheet"></div>
+<div id="toast"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════
+   1. CONFIG — colle ici tes clés Supabase quand tu les auras.
+   Tant que c'est vide, l'app tourne en MODE SIMU (100 % local,
+   multi-onglets sur le même téléphone + potes fictifs).
+   ══════════════════════════════════════════════════════════════ */
+const CFG = {
+  url : '',   // ex. 'https://xxxxxxxx.supabase.co'
+  key : ''    // clé "anon public" (publiable, elle est faite pour ça)
+};
+
+const LIVE   = !!(CFG.url && CFG.key);
+const MAX    = 15;    // têtes par écurie
+const BUDGET = 500;   // millions par joueur
+const TODAY  = new Date();
+const SEASON = TODAY.getFullYear();
+
+/* ══════════════════════════════════════════════════════════════
+   2. UTILITAIRES
+   ══════════════════════════════════════════════════════════════ */
+const $ = s => document.querySelector(s);
+const uid = () => Math.random().toString(36).slice(2, 9);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const M = n => n + ' M';
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+
+function fdate(d){
+  if(!d) return '?';
+  if(!d.m) return String(d.y);
+  return (d.d ? d.d + ' ' : '') + MOIS[d.m - 1] + ' ' + d.y;
+}
+function parseWikiDate(t){
+  const m = t && String(t).match(/^\+(\d{4})-(\d{2})-(\d{2})/);
+  return m ? {y:+m[1], m:+m[2] || 0, d:+m[3] || 0} : null;
+}
+function ageAt(birth, ref){
+  if(!birth) return null;
+  const ry = ref instanceof Date ? ref.getFullYear() : ref.y;
+  const rm = ref instanceof Date ? ref.getMonth() + 1 : (ref.m || 7);
+  const rd = ref instanceof Date ? ref.getDate() : (ref.d || 1);
+  const bm = birth.m || 7, bd = birth.d || 1;
+  let a = ry - birth.y;
+  if(rm < bm || (rm === bm && rd < bd)) a--;
+  return a;
+}
+const ptsFor = a => a >= 90 ? 1 : Math.max(1, 90 - a);
+
+let toastT;
+function toast(msg, bad){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.toggle('bad', !!bad);
+  t.classList.add('on');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('on'), 3200);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. LOGIQUE DE JEU (fonctions pures sur l'état)
+   ══════════════════════════════════════════════════════════════ */
+function blankState(code, hostId, hostName){
+  return {
+    fmt: 1, code, season: SEASON, hostId,
+    phase: 'lobby',            // lobby | bids | reveal
+    round: 1, version: 0,
+    players: [{id: hostId, name: hostName, budget: BUDGET, ready: false, bot: false}],
+    celebs: [],                // {id,qid,name,desc,thumb,birth,value,ownerId,dead,deathDate,ageDeath,points}
+    bids: [],                  // tour en cours uniquement
+    log: []                    // procès-verbaux
+  };
+}
+const P        = (st, id) => st.players.find(p => p.id === id);
+const nameOf   = (st, id) => (P(st, id) || {name:'?'}).name;
+const stableOf = (st, id) => st.celebs.filter(c => c.ownerId === id);
+const bidsOf   = (st, id) => st.bids.filter(b => b.playerId === id);
+const slotsOf  = (st, id) => MAX - stableOf(st, id).length;
+const leftOf   = (st, id) => slotsOf(st, id) - bidsOf(st, id).length;
+const heldOf   = (st, id) => bidsOf(st, id).reduce((s, b) => s + b.amount, 0);
+const freeOf   = (st, id) => (P(st, id) || {budget:0}).budget - heldOf(st, id);
+const ptsOf    = (st, id) => stableOf(st, id).filter(c => c.dead).reduce((s, c) => s + c.points, 0);
+
+/** Adjuge le tour : plus haute mise, égalité → première posée. */
+function resolveRound(st){
+  const groups = {};
+  st.bids.forEach(b => (groups[b.celebId] = groups[b.celebId] || []).push(b));
+  const lots = [];
+  Object.keys(groups).forEach(cid => {
+    const c = st.celebs.find(x => x.id === cid);
+    if(!c || c.ownerId) return;
+    const list = groups[cid].slice().sort((a, b) => b.amount - a.amount || a.ts - b.ts);
+    let win = null;
+    for(const b of list){
+      const p = P(st, b.playerId);
+      if(p && p.budget >= b.amount && stableOf(st, p.id).length < MAX){
+        p.budget -= b.amount; c.ownerId = p.id; win = b; break;
+      }
+    }
+    lots.push({
+      celeb: c.name, thumb: c.thumb || null, value: c.value,
+      winner: win ? nameOf(st, win.playerId) : null,
+      winnerId: win ? win.playerId : null,
+      amount: win ? win.amount : null,
+      offers: list.map(b => ({name: nameOf(st, b.playerId), amount: b.amount, win: win === b}))
+    });
+  });
+  lots.sort((a, b) => (b.amount || 0) - (a.amount || 0));
+  st.log.push({round: st.round, lots, at: Date.now()});
+  while(st.log.length > 10) st.log.shift();
+  st.bids = [];
+  st.celebs = st.celebs.filter(c => c.ownerId || c.dead);   // les invendus disparaissent
+  st.players.forEach(p => p.ready = false);
+  st.phase = 'reveal';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   4. RÉSEAU — deux adaptateurs, même interface.
+      create / load / commit(fn) / subscribe(cb) / close
+   ══════════════════════════════════════════════════════════════ */
+function LocalNet(code){
+  const K = 'oups:g:' + code;
+  let bc = null, poll = null, listener = null;
+  const read  = () => { try{ return JSON.parse(localStorage.getItem(K)); }catch(e){ return null; } };
+  const write = st => { localStorage.setItem(K, JSON.stringify(st)); if(bc) bc.postMessage(st.version); };
+  return {
+    mode: 'simu', code,
+    async exists(){ return !!read(); },
+    async create(st){ write(st); return st; },
+    async load(){ return read(); },
+    async commit(fn){
+      const st = read();
+      if(!st) return null;
+      if(fn(st) === false) return st;
+      st.version = (st.version || 0) + 1;
+      write(st);
+      return st;
+    },
+    subscribe(cb){
+      listener = cb;
+      try{
+        bc = new BroadcastChannel('oups:' + code);
+        bc.onmessage = () => { const s = read(); if(s) cb(s); };
+      }catch(e){}
+      window.addEventListener('storage', e => { if(e.key === K){ const s = read(); if(s) cb(s); } });
+      poll = setInterval(() => { const s = read(); if(s) cb(s); }, 1500);
+    },
+    close(){ if(bc) bc.close(); clearInterval(poll); }
+  };
+}
+
+async function SupaNet(code){
+  const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+  const sb = createClient(CFG.url, CFG.key, { realtime: { params: { eventsPerSecond: 5 } } });
+  let ch = null, poll = null;
+  const row = async () => {
+    const { data } = await sb.from('games').select('state,version').eq('code', code).maybeSingle();
+    return data || null;
+  };
+  return {
+    mode: 'live', code,
+    async exists(){ return !!(await row()); },
+    async create(st){
+      const { error } = await sb.from('games').insert({ code, state: st, version: 0 });
+      if(error) throw error;
+      return st;
+    },
+    async load(){ const r = await row(); return r ? r.state : null; },
+    async commit(fn){
+      for(let i = 0; i < 7; i++){
+        const r = await row();
+        if(!r) return null;
+        const st = r.state;
+        if(fn(st) === false) return st;
+        st.version = r.version + 1;
+        const { data } = await sb.from('games')
+          .update({ state: st, version: r.version + 1 })
+          .eq('code', code).eq('version', r.version).select('version');
+        if(data && data.length) return st;
+        await sleep(120 + Math.random() * 260);   // collision : on relit et on rejoue
+      }
+      toast('Synchro encombrée, réessaie.', true);
+      return null;
+    },
+    subscribe(cb){
+      ch = sb.channel('oups:' + code)
+        .on('postgres_changes',
+            { event: 'UPDATE', schema: 'public', table: 'games', filter: 'code=eq.' + code },
+            p => { if(p.new && p.new.state) cb(p.new.state); })
+        .subscribe();
+      poll = setInterval(async () => { const s = await this.load(); if(s) cb(s); }, 5000);  // filet de sécurité
+    },
+    close(){ if(ch) ch.unsubscribe(); clearInterval(poll); }
+  };
+}
+
+const makeNet = code => LIVE ? SupaNet(code) : Promise.resolve(LocalNet(code));
+
+/* ══════════════════════════════════════════════════════════════
+   5. WIKIPÉDIA / WIKIDATA
+   ══════════════════════════════════════════════════════════════ */
+async function wikiSearch(q){
+  const url = 'https://fr.wikipedia.org/w/api.php?action=query&generator=prefixsearch'
+    + '&gpssearch=' + encodeURIComponent(q) + '&gpslimit=7'
+    + '&prop=pageprops%7Cdescription%7Cpageimages&ppprop=wikibase_item'
+    + '&piprop=thumbnail&pithumbsize=90&format=json&origin=*';
+  const d = await (await fetch(url)).json();
+  return Object.values((d.query || {}).pages || {})
+    .sort((a, b) => a.index - b.index)
+    .filter(p => p.pageprops && p.pageprops.wikibase_item)
+    .map(p => ({ name: p.title, desc: p.description || '', qid: p.pageprops.wikibase_item,
+                 thumb: p.thumbnail ? p.thumbnail.source : null }));
+}
+/** Dates pour 1..n QIDs en une requête. → {qid:{birth,death}} */
+async function wikiDates(qids){
+  if(!qids.length) return {};
+  const out = {};
+  for(let i = 0; i < qids.length; i += 40){
+    const part = qids.slice(i, i + 40);
+    const url = 'https://www.wikidata.org/w/api.php?action=wbgetentities&ids=' + part.join('|')
+      + '&props=claims&format=json&origin=*';
+    const d = await (await fetch(url)).json();
+    Object.keys(d.entities || {}).forEach(q => {
+      const cl = (d.entities[q] || {}).claims || {};
+      const get = p => {
+        const c = (cl[p] || [])[0];
+        return c && c.mainsnak && c.mainsnak.datavalue ? c.mainsnak.datavalue.value.time : null;
+      };
+      out[q] = { birth: parseWikiDate(get('P569')), death: parseWikiDate(get('P570')) };
+    });
+  }
+  return out;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   6. ÉTAT CLIENT
+   ══════════════════════════════════════════════════════════════ */
+let net = null;          // adaptateur réseau
+let S = null;            // état partagé
+let ME = null;           // mon playerId
+let tab = 'bids';
+let peek = false;        // on consulte un onglet pendant la révélation
+let RES = [];            // résultats de recherche courants
+let DRAFT = null;        // fiche en cours de mise
+let seenDeaths = new Set();
+let lastRevealSeen = 0;
+
+const LS = { get:k => { try{ return localStorage.getItem(k); }catch(e){ return null; } },
+             set:(k,v) => { try{ localStorage.setItem(k,v); }catch(e){} },
+             del:k => { try{ localStorage.removeItem(k); }catch(e){} } };
+
+/* ══════════════════════════════════════════════════════════════
+   7. ACTIONS
+   ══════════════════════════════════════════════════════════════ */
+const randCode = () => Array.from({length:4}, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.floor(Math.random()*24)]).join('');
+
+async function createGame(name){
+  let code, tries = 0;
+  do { code = randCode(); net = await makeNet(code); tries++; } while(await net.exists() && tries < 8);
+  ME = 'p' + uid();
+  const st = blankState(code, ME, name);
+  await net.create(st);
+  LS.set('oups:me:' + code, ME); LS.set('oups:name', name); LS.set('oups:last', code);
+  await attach(st);
+}
+
+async function joinGame(code, name){
+  code = code.toUpperCase().trim();
+  net = await makeNet(code);
+  const st0 = await net.load();
+  if(!st0){ toast('Aucune partie avec ce code.', true); return; }
+  const known = LS.get('oups:me:' + code);
+  if(known && P(st0, known)){                       // reprise d'identité
+    ME = known;
+    await net.commit(s => { const p = P(s, ME); if(p) p.name = name || p.name; });
+  } else {
+    if(st0.phase !== 'lobby'){ toast('Partie déjà lancée — trop tard.', true); return; }
+    if(st0.players.some(p => p.name.toLowerCase() === name.toLowerCase())){ toast('Ce prénom est déjà pris.', true); return; }
+    ME = 'p' + uid();
+    await net.commit(s => {
+      if(s.phase !== 'lobby') return false;
+      s.players.push({ id: ME, name, budget: BUDGET, ready: false, bot: false });
+    });
+    LS.set('oups:me:' + code, ME);
+  }
+  LS.set('oups:name', name); LS.set('oups:last', code);
+  await attach(await net.load());
+}
+
+async function attach(st){
+  S = st;
+  st.celebs.filter(c => c.dead).forEach(c => seenDeaths.add(c.id));
+  lastRevealSeen = st.log.length;
+  net.subscribe(onRemote);
+  render();
+  checkDeaths();
+  setInterval(checkDeaths, 240000);
+  setInterval(botTick, 2200);
+}
+
+function onRemote(st){
+  if(!st || (S && st.version < S.version)) return;
+  if(S && st.version === S.version) return;      // rien de neuf : on ne redessine pas
+  const before = S;
+  S = st;
+  if(before && st.phase !== before.phase) peek = false;
+  // notification des nouveaux décès
+  st.celebs.filter(c => c.dead && !seenDeaths.has(c.id)).forEach(c => {
+    seenDeaths.add(c.id);
+    toast('Oups. ' + c.name + ' — ' + c.points + ' pts pour ' + nameOf(st, c.ownerId) + '.', true);
+  });
+  if(before && st.phase === 'reveal' && before.phase !== 'reveal') tab = 'bids';
+  maybeResolve();
+  render();
+}
+
+/** Dès que tout le monde est prêt, le premier client qui s'en aperçoit adjuge. */
+function maybeResolve(){
+  if(!S || S.phase !== 'bids') return;
+  const humans = S.players;
+  if(!humans.length || !humans.every(p => p.ready)) return;
+  net.commit(st => {
+    if(st.phase !== 'bids') return false;
+    if(!st.players.every(p => p.ready)) return false;
+    resolveRound(st);
+  }).then(st => { if(st){ S = st; render(); } });
+}
+
+function sealBid(){
+  if(!DRAFT) return;
+  const amount = DRAFT.amount;
+  if(!(amount >= 1)) return toast('Choisis une mise.', true);
+  net.commit(st => {
+    if(st.phase !== 'bids') return false;
+    if(leftOf(st, ME) <= 0){ toast('Plus de place ce tour.', true); return false; }
+    if(amount > freeOf(st, ME)){ toast('Budget insuffisant : ' + M(freeOf(st, ME)) + ' libre.', true); return false; }
+    const same = c => DRAFT.qid ? c.qid === DRAFT.qid : (!c.qid && c.name.toLowerCase() === DRAFT.name.toLowerCase());
+    let c = st.celebs.find(same);
+    if(c && (c.ownerId || c.dead)){ toast('Déjà pris. Exclusivité.', true); return false; }
+    if(c && st.bids.some(b => b.celebId === c.id && b.playerId === ME)){ toast('Tu as déjà misé sur elle ou lui.', true); return false; }
+    if(!c){
+      c = { id: 'c' + uid(), qid: DRAFT.qid, name: DRAFT.name, desc: DRAFT.desc, thumb: DRAFT.thumb,
+            birth: DRAFT.birth, value: DRAFT.value, ownerId: null,
+            dead: false, deathDate: null, ageDeath: null, points: 0 };
+      st.celebs.push(c);
+    }
+    st.bids.push({ id: 'b' + uid(), round: st.round, playerId: ME, celebId: c.id, amount, ts: Date.now() });
+    const p = P(st, ME); if(p) p.ready = false;
+  }).then(st => {
+    if(!st) return;
+    S = st; DRAFT = null; RES = []; closeSheet();
+    toast('Scellé : ' + M(amount) + '. Personne ne le voit.');
+    render();
+  });
+}
+
+function toggleReady(){
+  net.commit(st => {
+    const p = P(st, ME); if(!p) return false;
+    p.ready = !p.ready;
+  }).then(st => { if(st){ S = st; maybeResolve(); render(); } });
+}
+
+function startGame(){
+  net.commit(st => {
+    if(st.phase !== 'lobby') return false;
+    if(st.players.length < 2){ toast('Il faut au moins 2 joueurs.', true); return false; }
+    st.phase = 'bids';
+    st.players.forEach(p => p.ready = false);
+  }).then(st => { if(st){ S = st; render(); } });
+}
+
+function nextRound(){
+  net.commit(st => {
+    if(st.phase !== 'reveal') return false;
+    st.round++;
+    st.phase = 'bids';
+    st.players.forEach(p => p.ready = false);
+  }).then(st => { if(st){ S = st; tab = 'bids'; peek = false; render(); } });
+}
+
+/** Vérifie sur Wikidata si des membres d'écurie sont décédés. Automatique. */
+async function checkDeaths(silent){
+  if(!S) return;
+  const qids = S.celebs.filter(c => c.ownerId && !c.dead && c.qid).map(c => c.qid);
+  if(!qids.length) return;
+  let data;
+  try { data = await wikiDates([...new Set(qids)]); }
+  catch(e){ if(!silent) toast('Wikidata injoignable.', true); return; }
+  const dead = Object.keys(data).filter(q => data[q] && data[q].death);
+  if(!dead.length){ if(!silent) toast('Tout le monde va bien. Dommage.'); return; }
+  const st = await net.commit(s => {
+    let n = 0;
+    s.celebs.forEach(c => {
+      if(c.dead || !c.qid || !data[c.qid] || !data[c.qid].death) return;
+      const d = data[c.qid].death;
+      const a = ageAt(c.birth || data[c.qid].birth, d);
+      c.dead = true; c.deathDate = d; c.ageDeath = a; c.points = ptsFor(a); n++;
+    });
+    if(!n) return false;
+  });
+  if(st){ S = st; onRemote(st); }
+}
+
+/* ---------- Mode simu : potes fictifs ---------- */
+const PRE = ['Élise','Ronan','Kevin','Margaux','Thibault','Anaïs','Jules','Camille','Bastien','Nadia'];
+const FN = ['Marthe','Gaston','Odette','Félicien','Berthe','Anselme','Lucienne','Aimé','Germaine','Casimir','Suzon','Prosper','Léontine','Ernest','Augustine','Célestin','Blanche','Honoré','Eugénie','Renée','Adrien','Antoinette','Gustave','Léon','Henriette','Fernand','Yvonne','Achille'];
+const LN = ['Beaulieu','Cantarel','Dubosc','Estival','Frachon','Gassend','Herbelin','Jonquet','Kervella','Labarthe','Mounier','Nogaret','Pelloutier','Rabastens','Saliou','Tardieu','Valadon','Wallon','Zonza','Bousquet','Delorme','Escoffier','Grandpierre','Houdart','Lantelme','Nivelle','Pradal','Roussille'];
+const JOB = ['ténor de sous-préfecture','doyenne du tricot compétitif','roi déchu du juke-box','crooner de supermarché','papesse des mots croisés','commissaire-priseur de vide-greniers','archiviste des scandales municipaux','recordwoman de pétanque nocturne','vétéran des jeux télévisés','harpiste de télésiège','philatéliste de combat','miss Cantal 1971','druide homologué','dernier crieur de journaux','moustachu officiel de la Foire de Paris','madone des aires d’autoroute'];
+
+function addBots(n){
+  net.commit(st => {
+    if(st.phase !== 'lobby') return false;
+    const used = st.players.map(p => p.name);
+    const free = PRE.filter(x => !used.includes(x));
+    for(let i = 0; i < n && i < free.length; i++)
+      st.players.push({ id: 'p' + uid(), name: free[i], budget: BUDGET, ready: false, bot: true });
+  }).then(st => { if(st){ S = st; render(); toast(n + ' potes fictifs invités.'); } });
+}
+
+function fakeCeleb(st){
+  let name, guard = 0;
+  do { name = pick(FN) + ' ' + pick(LN); guard++; }
+  while(st.celebs.some(c => c.name === name) && guard < 40);
+  const y = 1930 + Math.floor(Math.random() * 42);
+  const birth = { y, m: 1 + Math.floor(Math.random() * 12), d: 1 + Math.floor(Math.random() * 28) };
+  const c = { id: 'c' + uid(), qid: null, name, desc: pick(JOB), thumb: null, birth,
+              value: ptsFor(ageAt(birth, TODAY)), ownerId: null,
+              dead: false, deathDate: null, ageDeath: null, points: 0 };
+  st.celebs.push(c);
+  return c;
+}
+
+/** Les bots ne vivent qu'en mode simu, et sont pilotés par l'hôte. */
+function botTick(){
+  if(LIVE || !S || S.phase !== 'bids' || ME !== S.hostId) return;
+  const pool = S.players.filter(p => p.bot && !p.ready);
+  if(!pool.length) return;
+  const bot = pick(pool);
+  net.commit(st => {
+    const p = P(st, bot.id);
+    if(!p || p.ready || st.phase !== 'bids') return false;
+    const left = leftOf(st, p.id), free = freeOf(st, p.id);
+    if(left <= 0 || free < 1 || Math.random() < 0.3){ p.ready = true; return; }
+    // 50 % de chances de contrer une cible déjà convoitée → teste les égalités
+    const hot = st.celebs.filter(c => !c.ownerId && !c.dead
+      && st.bids.some(b => b.celebId === c.id && b.playerId !== p.id)
+      && !st.bids.some(b => b.celebId === c.id && b.playerId === p.id));
+    const c = (hot.length && Math.random() < 0.5) ? pick(hot) : fakeCeleb(st);
+    let amount = Math.max(1, Math.round(c.value * (0.6 + Math.random() * 1.1)));
+    amount = Math.min(amount, free - Math.max(0, left - 1));
+    if(amount < 1){ p.ready = true; return; }
+    st.bids.push({ id: 'b' + uid(), round: st.round, playerId: p.id, celebId: c.id, amount, ts: Date.now() });
+  }).then(st => { if(st){ S = st; maybeResolve(); render(); } });
+}
+
+/** Simu : tue une tête au hasard pour tester le flux de score. */
+function simDeath(){
+  net.commit(st => {
+    const alive = st.celebs.filter(c => c.ownerId && !c.dead);
+    if(!alive.length){ toast('Aucune écurie garnie.', true); return false; }
+    const c = pick(alive);
+    const a = Math.max(20, ageAt(c.birth, TODAY) - Math.floor(Math.random() * 3));
+    c.dead = true; c.ageDeath = a; c.points = ptsFor(a);
+    c.deathDate = { y: SEASON, m: TODAY.getMonth() + 1, d: TODAY.getDate() };
+  }).then(st => { if(st){ S = st; onRemote(st); } });
+}
+
+function leaveGame(){
+  if(net) net.close();
+  LS.del('oups:last');
+  S = null; ME = null; net = null;
+  render();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   8. RENDU
+   ══════════════════════════════════════════════════════════════ */
+function avatar(c, cls){
+  const k = 'av ' + (cls || '') + (c.dead ? ' dead' : '');
+  return c.thumb ? '<img class="' + k + '" src="' + esc(c.thumb) + '" alt="">'
+                 : '<span class="' + k + ' ph">✝</span>';
+}
+
+function render(){
+  const app = $('#app'), meta = $('#topMeta'), nav = $('#nav');
+  meta.innerHTML = S
+    ? '<span class="pill">' + esc(S.code) + '</span>'
+      + '<span class="pill ' + (LIVE ? 'live' : 'simu') + '">' + (LIVE ? 'live' : 'simu') + '</span>'
+    : '<span class="pill ' + (LIVE ? 'live' : 'simu') + '">' + (LIVE ? 'live' : 'simu') + '</span>';
+
+  if(!S){ nav.hidden = true; app.innerHTML = viewHome(); return; }
+  if(S.phase === 'lobby'){ nav.hidden = true; app.innerHTML = viewLobby(); return; }
+  if(S.phase === 'reveal' && !peek){ nav.hidden = true; app.innerHTML = viewReveal(); return; }
+
+  nav.hidden = false;
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  app.innerHTML = (tab === 'bids' ? viewBids() : tab === 'stable' ? viewStable() : viewRank())
+    + (peek ? '<div class="spacer"></div><button class="b or full" data-act="next">Tour ' + (S.round + 1) + ' →</button>' : '');
+}
+
+/* ---------- accueil ---------- */
+function viewHome(){
+  const name = esc(LS.get('oups:name') || '');
+  const last = LS.get('oups:last');
+  return `
+  <div style="text-align:center;padding:14px 0 6px">
+    <div class="brass" style="letter-spacing:.6em;font-size:12px">✿ ✝ ✿</div>
+    <h1 style="margin-top:8px">Oups<i>.</i></h1>
+    <p class="mut" style="font-family:var(--display);font-style:italic;margin-top:8px">
+      « Ce n’est qu’un au revoir. Enfin, surtout pour vous. »</p>
+    <div class="pill" style="margin-top:14px;display:inline-block">Saison ${SEASON}</div>
+  </div>
+
+  <div class="card gold">
+    <input class="f" id="iName" placeholder="Ton prénom" value="${name}" autocomplete="given-name" maxlength="14">
+    <div class="spacer"></div>
+    <button class="b or full" data-act="create">Créer une partie</button>
+  </div>
+
+  <div class="card">
+    <p class="mut" style="margin-bottom:10px">Rejoindre avec un code</p>
+    <input class="f code" id="iCode" placeholder="––––" maxlength="4" autocapitalize="characters" autocomplete="off" inputmode="text">
+    <div class="spacer"></div>
+    <button class="b full" data-act="join">Rejoindre</button>
+    ${last ? `<div class="spacer"></div><button class="b ghost full sm" data-act="resume" data-code="${esc(last)}">Reprendre ${esc(last)}</button>` : ''}
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div class="grow">
+        <div class="big">Comment on joue</div>
+        <p class="mut">6 règles, 40 secondes de lecture.</p>
+      </div>
+      <button class="b sm ghost" data-act="rules">Lire</button>
+    </div>
+  </div>
+
+  ${LIVE ? '' : `<div class="card"><p class="mut">
+    <b class="mumc">Mode simu.</b> Aucune clé Supabase n’est configurée : la partie vit dans ce navigateur.
+    Tu peux inviter des potes fictifs qui misent tout seuls, et ouvrir un 2ᵉ onglet avec le même code
+    pour jouer à deux sur le même téléphone. Tout est prêt pour basculer en vrai multi-joueurs :
+    il suffit de coller 2 lignes de clés en haut du fichier.</p></div>`}
+  <footer>Oups. — <button data-act="rules">règles</button> · single-file, hébergeable sur GitHub Pages</footer>`;
+}
+
+/* ---------- lobby ---------- */
+function viewLobby(){
+  const host = S.hostId === ME;
+  return `
+  <div class="card gold" style="text-align:center">
+    <p class="mut">Code de la partie</p>
+    <div style="font-family:var(--display);font-size:52px;font-weight:800;letter-spacing:.2em;color:var(--brass);line-height:1.1">${esc(S.code)}</div>
+    <div class="spacer"></div>
+    <button class="b sm ghost" data-act="share">Partager le code</button>
+  </div>
+
+  <h2>À la veillée</h2>
+  <p class="sub">${S.players.length} joueur${S.players.length > 1 ? 's' : ''} · ${M(BUDGET)} chacun · ${MAX} têtes max</p>
+  <div class="card">
+    ${S.players.map(p => `<div class="row" style="padding:9px 0">
+      <span class="av ph">${esc(p.name[0] || '?')}</span>
+      <span class="grow nm">${esc(p.name)}${p.id === ME ? ' <span class="tag s">toi</span>' : ''}</span>
+      ${p.bot ? '<span class="tag">fictif</span>' : ''}
+      ${p.id === S.hostId ? '<span class="tag b">hôte</span>' : ''}
+    </div>`).join('')}
+  </div>
+
+  ${LIVE ? '' : `<button class="b full ghost" data-act="addbots">＋ Inviter 4 potes fictifs</button><div class="spacer"></div>`}
+
+  ${host
+    ? `<button class="b or full" data-act="start" ${S.players.length < 2 ? 'disabled' : ''}>
+         ${S.players.length < 2 ? 'Il faut au moins 2 joueurs' : 'Lancer le tour 1'}</button>`
+    : `<div class="empty">En attente de ${esc(nameOf(S, S.hostId))}…</div>`}
+  <div class="spacer"></div>
+  <button class="b ghost full sm" data-act="leave">Quitter</button>`;
+}
+
+/* ---------- enchères ---------- */
+function viewBids(){
+  const me = P(S, ME);
+  if(!me) return '<div class="empty"><div class="g">Tu n’es plus dans cette partie.</div>'
+    + '<button class="b ghost sm" data-act="leave" style="margin-top:12px">Retour</button></div>';
+  const left = leftOf(S, ME), free = freeOf(S, ME), mine = bidsOf(S, ME);
+  const readyN = S.players.filter(p => p.ready).length;
+  const closed = left <= 0;
+
+  const rows = mine.map(b => {
+    const c = S.celebs.find(x => x.id === b.celebId);
+    if(!c) return '';
+    return `<div class="tile"><div class="row">
+      ${avatar(c)}
+      <div class="grow"><div class="nm">${esc(c.name)}</div><div class="ds">${esc(c.desc)}</div></div>
+      <div style="text-align:right">
+        <div class="brass big num">${M(b.amount)}</div>
+        <div class="mut" style="font-size:11px">scellé</div>
+      </div>
+    </div></div>`;
+  }).join('');
+
+  return `
+  <div class="card gold">
+    <div class="row">
+      <div class="grow">
+        <div class="big">Tour ${S.round}</div>
+        <p class="mut">Mises secrètes. Révélation quand tout le monde est prêt.</p>
+      </div>
+      <div style="text-align:right">
+        <div class="brass big num">${M(free)}</div>
+        <div class="mut" style="font-size:11px">libre sur ${M(me.budget)}</div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="row" style="font-size:13px">
+      <span class="tag ${closed ? 'm' : 'b'}">${left} enchère${left > 1 ? 's' : ''} possible${left > 1 ? 's' : ''}</span>
+      <span class="tag">${stableOf(S, ME).length}/${MAX} en écurie</span>
+      <span class="grow"></span>
+      <span class="dots">${S.players.map(p => `<span class="dot ${p.ready ? 'on' : ''}" title="${esc(p.name)}"></span>`).join('')}</span>
+    </div>
+  </div>
+
+  <h2>Tes mises de ce tour</h2>
+  <p class="sub">${mine.length ? 'Définitives : pas de surenchère.' : 'Rien pour l’instant.'}</p>
+  ${rows || `<div class="empty"><div class="g">Carnet vierge.</div>Ajoute une cible avec le bouton ci-dessous.</div>`}
+
+  <div class="sticky"><div class="in">
+    <button class="b or grow" data-act="search" ${closed ? 'disabled' : ''}>＋ Cible</button>
+    <button class="b ${me.ready ? '' : 'mort'} grow" data-act="ready">
+      ${me.ready ? '✓ Prêt · ' + readyN + '/' + S.players.length : 'Je suis prêt'}
+    </button>
+  </div></div>`;
+}
+
+/* ---------- révélation ---------- */
+function viewReveal(){
+  const pv = S.log[S.log.length - 1] || { round: S.round, lots: [] };
+  const mine = pv.lots.filter(l => l.winnerId === ME);
+  return `
+  <div class="card gold" style="text-align:center">
+    <p class="mut">Procès-verbal</p>
+    <div class="big" style="font-size:26px">Tour ${pv.round}</div>
+    <p class="mut" style="margin-top:4px">
+      ${pv.lots.filter(l => l.winner).length} adjudication(s) ·
+      ${mine.length ? '<span class="brass">' + mine.length + ' pour toi</span>' : 'rien pour toi'}
+    </p>
+  </div>
+
+  ${pv.lots.length ? pv.lots.map(l => `
+    <div class="tile ${l.winnerId === ME ? '' : ''}">
+      <div class="row">
+        ${avatar({thumb: l.thumb})}
+        <div class="grow">
+          <div class="nm">${esc(l.celeb)}</div>
+          <div class="ds">${l.value} pt${l.value > 1 ? 's' : ''} en jeu</div>
+        </div>
+        ${l.winner
+          ? `<div style="text-align:right"><div class="brass num">${M(l.amount)}</div><div class="mut" style="font-size:11px">${esc(l.winner)}</div></div>`
+          : '<span class="tag m">invendu</span>'}
+      </div>
+      ${l.offers.length > 1 ? `<div class="row wrap" style="margin-top:8px;gap:6px">
+        ${l.offers.map(o => `<span class="tag ${o.win ? 'b' : ''}" style="${o.win ? '' : 'text-decoration:line-through;opacity:.65'}">${esc(o.name)} ${M(o.amount)}</span>`).join('')}
+      </div>` : ''}
+    </div>`).join('')
+   : '<div class="empty"><div class="g">Personne n’a misé.</div>Tour blanc.</div>'}
+
+  <div class="spacer"></div>
+  <button class="b or full" data-act="next">Tour ${S.round + 1} →</button>
+  <div class="spacer"></div>
+  <div class="row" style="gap:8px">
+    <button class="b ghost sm grow" data-act="tabrank">Classement</button>
+    <button class="b ghost sm grow" data-act="tabstable">Écuries</button>
+  </div>`;
+}
+
+/* ---------- écuries ---------- */
+function viewStable(){
+  const order = S.players.slice().sort((a, b) => (a.id === ME ? -1 : b.id === ME ? 1 : 0));
+  return `
+  <h2>Les écuries</h2>
+  <p class="sub">Les décès sont vérifiés automatiquement sur Wikidata.</p>
+  <div class="row" style="gap:8px;margin-bottom:14px">
+    <button class="b sm ghost grow" data-act="check">↻ Vérifier maintenant</button>
+    ${LIVE ? '' : '<button class="b sm mort grow" data-act="simdeath">☠ Simuler un décès</button>'}
+  </div>
+  ${order.map(p => {
+    const st = stableOf(S, p.id);
+    const dead = st.filter(c => c.dead);
+    return `<div class="card">
+      <div class="row" style="margin-bottom:10px">
+        <div class="grow">
+          <div class="big">${esc(p.name)}${p.id === ME ? ' <span class="tag s">toi</span>' : ''}</div>
+          <div class="mut">${st.length}/${MAX} · ${M(p.budget)} restants · ${ptsOf(S, p.id)} pts</div>
+        </div>
+        ${dead.length ? '<span class="tag m">' + dead.length + ' ✝</span>' : ''}
+      </div>
+      ${st.length ? st.slice().sort((a, b) => (b.dead ? 1 : 0) - (a.dead ? 1 : 0) || b.value - a.value).map(c => `
+        <div class="tile ${c.dead ? 'dead' : ''}">
+          ${c.dead ? '<div class="stamp">Oups.</div>' : ''}
+          <div class="row">
+            ${avatar(c)}
+            <div class="grow">
+              <div class="nm">${esc(c.name)}</div>
+              <div class="ds">${c.dead
+                ? '✝ ' + (c.deathDate ? fdate(c.deathDate) + ' · ' : '') + c.ageDeath + ' ans'
+                : esc(c.desc)}</div>
+            </div>
+            ${c.dead
+              ? '<span class="tag m">+' + c.points + ' pts</span>'
+              : '<span class="tag">' + c.value + ' pts</span>'}
+          </div>
+        </div>`).join('')
+      : '<div class="empty">Écurie vide. Tout le monde va bien.</div>'}
+    </div>`;
+  }).join('')}`;
+}
+
+/* ---------- classement ---------- */
+function viewRank(){
+  const rows = S.players.map(p => ({
+    p, pts: ptsOf(S, p.id),
+    dead: stableOf(S, p.id).filter(c => c.dead).length,
+    size: stableOf(S, p.id).length
+  })).sort((a, b) => b.pts - a.pts || b.dead - a.dead || b.size - a.size);
+  const top = Math.max(1, rows[0] ? rows[0].pts : 1);
+  return `
+  <h2>Le carnet du jour</h2>
+  <p class="sub">Un décès à 90 ans ou plus vaut 1 point. Sinon : 90 − l’âge.</p>
+  ${rows.map((r, i) => `
+    <div class="card" style="padding:13px 16px">
+      <div class="row">
+        <span class="big" style="width:26px;color:${i === 0 && r.pts ? 'var(--brass)' : 'var(--dim)'}">${i + 1}</span>
+        <div class="grow">
+          <div class="nm">${esc(r.p.name)}${r.p.id === ME ? ' <span class="tag s">toi</span>' : ''}</div>
+          <div class="mut" style="font-size:12px">${r.dead} ✝ · ${r.size}/${MAX} · ${M(r.p.budget)}</div>
+        </div>
+        <span class="big num" style="font-size:26px;color:${r.pts ? 'var(--brass)' : 'var(--dim)'}">${r.pts}</span>
+      </div>
+      <div class="bar" style="margin-top:9px"><i style="width:${Math.round(r.pts / top * 100)}%"></i></div>
+    </div>`).join('')}
+  <div class="spacer"></div>
+  ${S.log.length ? `<h2>Historique</h2><p class="sub">Les derniers procès-verbaux.</p>
+    ${S.log.slice().reverse().map(pv => `<div class="card">
+      <div class="big" style="font-size:16px;margin-bottom:6px">Tour ${pv.round}</div>
+      ${pv.lots.filter(l => l.winner).map(l => `<div class="row" style="font-size:13px;padding:3px 0">
+        <span class="grow">${esc(l.celeb)}</span><span class="brass num">${M(l.amount)}</span>
+        <span class="mut">${esc(l.winner)}</span></div>`).join('') || '<div class="mut">Aucune adjudication.</div>'}
+    </div>`).join('')}` : ''}
+  <div class="spacer"></div>
+  <button class="b ghost full sm" data-act="rules">Règles</button>
+  <div class="spacer"></div>
+  <button class="b ghost full sm" data-act="leave">Quitter la partie</button>`;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   9. SHEET (recherche, mise, règles)
+   ══════════════════════════════════════════════════════════════ */
+function openSheet(html){
+  $('#sheet').innerHTML = '<div class="handle"></div>' + html;
+  $('#sheet').classList.add('on');
+  $('#veil').classList.add('on');
+}
+function closeSheet(){
+  $('#sheet').classList.remove('on');
+  $('#veil').classList.remove('on');
+  DRAFT = null;
+}
+
+function sheetSearch(){
+  openSheet(`
+    <h2>Qui va nous manquer ?</h2>
+    <p class="sub">Recherche sur Wikipédia. Pas de page, pas de cible.</p>
+    <input class="f" id="q" placeholder="Nom de la célébrité…" autocomplete="off" autocorrect="off">
+    <div id="res" style="margin-top:12px"></div>`);
+  const q = $('#q');
+  setTimeout(() => q.focus(), 220);
+  let deb, seq = 0;
+  q.addEventListener('input', () => {
+    const term = q.value.trim();
+    clearTimeout(deb);
+    if(term.length < 2){ $('#res').innerHTML = ''; return; }
+    $('#res').innerHTML = '<div class="mut" style="padding:10px 4px">Consultation de l’état civil…</div>';
+    deb = setTimeout(async () => {
+      const mark = ++seq;
+      try {
+        const r = await wikiSearch(term);
+        if(mark !== seq) return;
+        RES = r;
+        $('#res').innerHTML = r.length
+          ? r.map((s, i) => `<button class="res" data-act="pick" data-i="${i}">
+              ${s.thumb ? '<img class="av" src="' + esc(s.thumb) + '" alt="">' : '<span class="av ph">✝</span>'}
+              <span class="grow"><span class="nm" style="display:block">${esc(s.name)}</span>
+              <span class="ds">${esc(s.desc)}</span></span></button>`).join('')
+          : '<div class="empty">Aucune page Wikipédia. Tonton Gérard, on a dit non.</div>';
+      } catch(e){
+        if(mark !== seq) return;
+        $('#res').innerHTML = '<div class="empty"><div class="g">Wikipédia injoignable.</div>Vérifie ta connexion.</div>';
+      }
+    }, 300);
+  });
+}
+
+async function pickResult(i){
+  const s = RES[i];
+  if(!s) return;
+  openSheet('<div class="empty"><div class="g">' + esc(s.name) + '</div>Consultation de l’état civil…</div>');
+  let d = {};
+  try { d = (await wikiDates([s.qid]))[s.qid] || {}; }
+  catch(e){ openSheet('<div class="empty"><div class="g">Wikidata injoignable.</div>Réessaie.</div>'); return; }
+
+  if(d.death){
+    const a = ageAt(d.birth, d.death);
+    return openSheet(`<div class="empty"><div class="g">Trop tard.</div>
+      ${esc(s.name)} est décédé·e le ${fdate(d.death)}${a ? ' à ' + a + ' ans' : ''}.
+      Il fallait jouer plus vite.</div>
+      <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
+  }
+  if(!d.birth){
+    return openSheet(`<div class="empty"><div class="g">Date de naissance introuvable.</div>
+      Wikidata ne documente pas ${esc(s.name)}. Choisis quelqu’un de mieux fiché.</div>
+      <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
+  }
+  const taken = S.celebs.find(c => c.qid === s.qid && (c.ownerId || c.dead));
+  if(taken){
+    return openSheet(`<div class="empty"><div class="g">Déjà pris.</div>
+      ${esc(s.name)} appartient à ${esc(nameOf(S, taken.ownerId))}. Exclusivité, règle n°4.</div>
+      <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
+  }
+
+  const age = ageAt(d.birth, TODAY);
+  const value = ptsFor(age);
+  DRAFT = { qid: s.qid, name: s.name, desc: s.desc, thumb: s.thumb, birth: d.birth, age, value, amount: value };
+  sheetBid();
+}
+
+function sheetBid(){
+  const free = freeOf(S, ME);
+  const opts = [...new Set([DRAFT.value, Math.ceil(DRAFT.value * 1.25), Math.ceil(DRAFT.value * 1.6), Math.ceil(DRAFT.value * 2)])]
+    .filter(v => v >= 1 && v <= free);
+  openSheet(`
+    <div class="row" style="gap:14px;margin-bottom:14px">
+      ${avatar(DRAFT, 'lg')}
+      <div class="grow">
+        <div class="nm" style="font-size:20px">${esc(DRAFT.name)}</div>
+        <div class="ds">${esc(DRAFT.desc)}</div>
+      </div>
+    </div>
+    <div class="card gold" style="margin-bottom:14px">
+      <div class="row">
+        <div class="grow"><div class="mut">Âge</div><div class="big">${DRAFT.age} ans</div></div>
+        <div style="text-align:right"><div class="mut">Vaut</div>
+        <div class="big brass">${DRAFT.value} pts</div></div>
+      </div>
+      <p class="mut" style="margin-top:8px;font-size:12px">
+        S’il ou elle nous quitte cette saison, tu encaisses ${DRAFT.value} points.</p>
+    </div>
+
+    <h2>Ta mise</h2>
+    <p class="sub">${M(free)} libres. La plus haute mise emporte le lot. Aucune surenchère possible.</p>
+    <div class="chips" id="chips">
+      ${opts.map(v => `<button class="chip ${v === DRAFT.amount ? 'on' : ''}" data-act="amt" data-v="${v}">${M(v)}</button>`).join('')}
+    </div>
+    <input class="f num" id="amt" type="number" min="1" max="${free}" inputmode="numeric" value="${DRAFT.amount}" placeholder="Autre montant">
+    <div class="spacer"></div>
+    <button class="b or full" data-act="seal" ${free < 1 ? 'disabled' : ''}>🕯 Sceller l’enchère</button>
+    <div class="spacer"></div>
+    <button class="b ghost full sm" data-act="search">Annuler</button>`);
+
+  $('#amt').addEventListener('input', e => {
+    DRAFT.amount = parseInt(e.target.value, 10) || 0;
+    document.querySelectorAll('#chips .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === DRAFT.amount));
+  });
+}
+
+function sheetRules(){
+  openSheet(`
+    <h2>Le règlement</h2>
+    <p class="sub">Lu et approuvé devant notaire. Enfin, devant Kevin.</p>
+    <ol class="rules">
+      <li>La cible doit avoir une <b>page Wikipédia</b>. On ne choisit que dans les résultats de recherche.</li>
+      <li>Décès à <b>90 ans ou plus : 1 point</b>. Sinon, <b>90 − l’âge</b> (47 ans = 43 points). Le prix indicatif en millions est égal aux points.</li>
+      <li><b>${M(BUDGET)}</b> de budget pour la saison, <b>${MAX} têtes</b> maximum.</li>
+      <li>Une cible adjugée est <b>exclusive</b> : plus personne ne peut la prendre.</li>
+      <li>Chaque tour, tu mises <b>en secret</b> sur autant de cibles que de places libres dans ton écurie. Une mise est <b>définitive</b>. Quand tout le monde est prêt, tout est révélé : <b>la plus haute mise gagne</b>, égalité départagée par la première posée. Les perdants ne paient rien.</li>
+      <li>La saison court du <b>1ᵉʳ janvier au 31 décembre</b>. Les décès sont vérifiés sur Wikidata, personne ne triche.</li>
+    </ol>
+    <p class="mut" style="text-align:center;font-family:var(--display);font-style:italic;margin:18px 0 6px">
+      « Ils sont partis trop tôt. Sauf pour nos scores. »</p>
+    <button class="b full ghost" data-act="closesheet">Fermer</button>`);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   10. ÉVÉNEMENTS
+   ══════════════════════════════════════════════════════════════ */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if(!el) return;
+  const a = el.dataset.act;
+
+  if(a === 'closesheet')  return closeSheet();
+  if(a === 'rules')       return sheetRules();
+  if(a === 'search')      return sheetSearch();
+  if(a === 'pick')        return pickResult(+el.dataset.i);
+  if(a === 'amt'){ DRAFT.amount = +el.dataset.v; return sheetBid(); }
+  if(a === 'seal')        return sealBid();
+  if(a === 'ready')       return toggleReady();
+  if(a === 'start')       return startGame();
+  if(a === 'next')        return nextRound();
+  if(a === 'addbots')     return addBots(4);
+  if(a === 'simdeath')    return simDeath();
+  if(a === 'check'){ toast('Consultation de Wikidata…'); return checkDeaths(); }
+  if(a === 'leave')       return leaveGame();
+  if(a === 'tab'){
+    tab = el.dataset.tab;
+    if(S && S.phase === 'reveal') peek = (tab !== 'bids');   // « Enchères » ramène au procès-verbal
+    return render();
+  }
+  if(a === 'tabrank'){ tab = 'rank'; peek = true; return render(); }
+  if(a === 'tabstable'){ tab = 'stable'; peek = true; return render(); }
+
+  if(a === 'share'){
+    const txt = 'Oups. — rejoins la partie avec le code ' + S.code + ' : ' + location.href;
+    if(navigator.share) navigator.share({ text: txt }).catch(() => {});
+    else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(() => toast('Code copié.'));
+    else toast('Code : ' + S.code);
+    return;
+  }
+  if(a === 'create'){
+    const n = ($('#iName').value || '').trim();
+    if(!n) return toast('Il faut un prénom.', true);
+    return createGame(n);
+  }
+  if(a === 'join'){
+    const n = ($('#iName').value || '').trim();
+    const c = ($('#iCode').value || '').trim();
+    if(!n) return toast('Il faut un prénom.', true);
+    if(c.length !== 4) return toast('Le code fait 4 lettres.', true);
+    return joinGame(c, n);
+  }
+  if(a === 'resume'){
+    const n = (LS.get('oups:name') || 'moi');
+    return joinGame(el.dataset.code, n);
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   11. BOOT
+   ══════════════════════════════════════════════════════════════ */
+(async () => {
+  render();
+  // reprise auto si on revient sur une partie en cours dans ce navigateur
+  const last = LS.get('oups:last');
+  const name = LS.get('oups:name');
+  if(last && name){
+    try {
+      const n = await makeNet(last);
+      const st = await n.load();
+      const me = LS.get('oups:me:' + last);
+      if(st && me && P(st, me)){ net = n; ME = me; await attach(st); return; }
+    } catch(e){}
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
