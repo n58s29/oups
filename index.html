@@ -401,7 +401,7 @@ async function refreshGame(){
   if(!G) return;
   try{
     const b = await fetchBundle(G.id);
-    if(!b.game) return;
+    if(!b.game){ toast('La partie a été supprimée par son organisateur.', true); return goHome(); }
     const newDeaths = b.picks.filter(p => p.dead && !PICKS.some(x => x.id === p.id && x.dead));
     G = b.game; PARTS = b.parts; PICKS = b.picks;
     newDeaths.forEach(announceDeath);
@@ -502,6 +502,37 @@ async function savePseudo(pseudo){
   await loadMyGames();
   render();
 }
+async function leaveGameData(gid){
+  if(!confirm('Quitter cette partie ? Tes réservations retournent au quai.')) return;
+  const { error } = await sb.rpc('gd_leave', { p_game: gid });
+  if(error) return fail('Départ de la partie', error);
+  if(G && G.id === gid){ unsubscribe(); G = null; PARTS = []; PICKS = []; LS.del('gd:last'); }
+  await loadMyGames();
+  render(); sheetAccount();
+  toast('Tu es descendu du train.');
+}
+async function deleteGame(gid){
+  if(!confirm('Supprimer cette partie pour TOUT le monde ? Irréversible.')) return;
+  const { error } = await sb.from('gd_games').delete().eq('id', gid);
+  if(error) return fail('Suppression de la partie', error);
+  if(G && G.id === gid){ unsubscribe(); G = null; PARTS = []; PICKS = []; LS.del('gd:last'); }
+  await loadMyGames();
+  render(); sheetAccount();
+  toast('Partie supprimée.');
+}
+async function deleteAccount(){
+  if(!confirm('Supprimer ton compte et TOUTES tes données ? Irréversible.')) return;
+  if(!confirm('Vraiment sûr ? Les parties que tu organises disparaissent aussi, pour tout le monde.')) return;
+  const { error } = await sb.rpc('gd_delete_account');
+  if(error) return fail('Suppression du compte', error);
+  unsubscribe();
+  await sb.auth.signOut().catch(() => {});
+  ME = null; PROFILE = null; G = null; MYGAMES = [];
+  LS.del('gd:last');
+  closeSheet(); render();
+  toast('Compte supprimé. Bon voyage.');
+}
+
 async function signOut(){
   unsubscribe();
   await sb.auth.signOut();
@@ -658,7 +689,7 @@ function render(){
     ? '<span class="pill">' + esc(G.code) + '</span>'
       + (ph === 'choice' ? '<span class="pill mumP num" id="cdp">' + cdown(endsMs() - Date.now()) + '</span>' : '')
       + (isAdmin() && ph !== 'lobby' ? '<button class="pill" data-act="admin">⚙ admin</button>' : '')
-    : (PROFILE ? '<span class="pill">' + esc(PROFILE.pseudo) + '</span>' : '');
+    : (PROFILE ? '<button class="pill" data-act="account">' + esc(PROFILE.pseudo) + '</button>' : '');
 
   if(!ME){ nav.hidden = true; app.innerHTML = viewAuth(); return; }
   if(!PROFILE){ nav.hidden = true; app.innerHTML = viewPseudo(); return; }
@@ -750,7 +781,7 @@ function viewHome(){
     <button class="b or full" data-act="create">Créer une partie</button>
   </div>
 
-  <footer><button data-act="rules">règles</button> · <button data-act="signout">se déconnecter</button></footer>`;
+  <footer><button data-act="rules">règles</button> · <button data-act="account">mon compte</button> · <button data-act="signout">se déconnecter</button></footer>`;
 }
 
 /* ---------- lobby ---------- */
@@ -1021,6 +1052,37 @@ function sheetRules(){
     <button class="b full ghost" data-act="closesheet">Fermer</button>`);
 }
 
+function sheetAccount(){
+  sb.auth.getUser().then(({ data:{ user } }) => {
+    openSheet(`
+      <h2>Mon compte</h2>
+      <p class="sub">${esc(user ? user.email : '?')}</p>
+
+      <p class="mut" style="margin-bottom:6px">Pseudo</p>
+      <div class="row">
+        <input class="f grow" id="iPseudo2" value="${esc(PROFILE ? PROFILE.pseudo : '')}" maxlength="20">
+        <button class="b" data-act="repseudo">OK</button>
+      </div>
+      <div class="sep"></div>
+
+      <p class="mut" style="margin-bottom:8px">Mes parties</p>
+      ${MYGAMES.map(g => `<div class="row" style="padding:7px 0">
+        <span class="grow">${esc(g.name)} <span class="mut">· ${esc(g.code)}${g.admin_id === ME ? ' · chef de gare' : ''}</span></span>
+        ${g.admin_id === ME
+          ? '<button class="b sm mort" data-act="delgame" data-id="' + esc(g.id) + '">Supprimer</button>'
+          : '<button class="b sm ghost" data-act="leavegame" data-id="' + esc(g.id) + '">Quitter</button>'}
+      </div>`).join('') || '<p class="mut">Aucune partie en cours.</p>'}
+      <div class="sep"></div>
+
+      <p class="mut" style="margin-bottom:8px">Tout effacer : compte, pseudo, participations, réservations.
+        Les parties dont tu es le chef de gare seront supprimées pour tout le monde.
+        Quitter une partie libère tes têtes — quelqu’un d’autre pourra les réserver.</p>
+      <button class="b full mort" data-act="delaccount">Supprimer mon compte et mes données</button>
+      <div class="spacer"></div>
+      <button class="b full ghost" data-act="closesheet">Fermer</button>`);
+  });
+}
+
 function sheetAdmin(){
   const ph = phase();
   openSheet(`
@@ -1056,76 +1118,10 @@ document.addEventListener('click', e => {
   if(a === 'closesheet')  return closeSheet();
   if(a === 'rules')       return sheetRules();
   if(a === 'admin')       return sheetAdmin();
-  if(a === 'search')      return sheetSearch();
-  if(a === 'pick')        return pickResult(+el.dataset.i);
-  if(a === 'reserve'){ const done = busy(el, 'Réservation…'); return addPick().finally(done); }
-  if(a === 'unpick')      return removePick(el.dataset.id);
-  if(a === 'check'){ toast('Consultation de Wikidata…'); return checkDeaths(true); }
-  if(a === 'forcecheck'){ closeSheet(); toast('Consultation de Wikidata…'); return checkDeaths(true); }
-  if(a === 'home')        return goHome();
-  if(a === 'signout')     return signOut();
-  if(a === 'tab'){ tab = el.dataset.tab; return render(); }
-  if(a === 'dur'){ LMIN = +el.dataset.min; return render(); }
-  if(a === 'launch'){ const done = busy(el, 'Départ…'); return launchGame(LMIN).finally(done); }
-  if(a === 'closephase')  return closePhase();
-  if(a === 'extend')      return extendPhase(+el.dataset.min);
-  if(a === 'kick')        return kick(el.dataset.uid);
-  if(a === 'open'){ const done = busy(el); return openGame(el.dataset.id).catch(e2 => fail('Ouverture', e2)).finally(done); }
-
-  if(a === 'share'){
-    const txt = 'Le Grand Départ — monte à bord avec le code ' + G.code + ' : ' + location.href.split('#')[0];
-    if(navigator.share) navigator.share({ text: txt }).catch(() => {});
-    else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(() => toast('Code copié.'));
-    else toast('Code : ' + G.code);
-    return;
-  }
-
-  if(a === 'signin' || a === 'signup'){
-    const em = ($('#iMail').value || '').trim().toLowerCase();
-    const pw = $('#iPass').value || '';
-    if(!/.+@.+\..+/.test(em)) return toast('Il faut un email valide.', true);
-    if(pw.length < 6) return toast('6 caractères minimum pour le mot de passe.', true);
-    const done = busy(el);
-    return (a === 'signin' ? signIn(em, pw) : signUp(em, pw))
-      .catch(e2 => fail('Compte', e2)).finally(done);
-  }
-  if(a === 'pseudo'){
-    const ps = ($('#iPseudo').value || '').trim();
-    if(!ps) return toast('Il faut un pseudo.', true);
-    const done = busy(el);
-    return savePseudo(ps).finally(done);
-  }
-  if(a === 'create'){
-    const nm = ($('#iGName').value || '').trim();
-    const done = busy(el, 'Création…');
-    return createGame(nm).catch(e2 => fail('Création de la partie', e2)).finally(done);
-  }
-  if(a === 'join'){
-    const c = ($('#iCode').value || '').trim();
-    if(c.length !== 4) return toast('Le code fait 4 lettres.', true);
-    const done = busy(el, 'Embarquement…');
-    return joinByCode(c).catch(e2 => fail('Embarquement', e2)).finally(done);
-  }
-});
-
-/* ══════════════════════════════════════════════════════════════
-   11. BOOT
-   ══════════════════════════════════════════════════════════════ */
-sb.auth.onAuthStateChange((ev) => {
-  if(ev === 'SIGNED_OUT'){ ME = null; PROFILE = null; G = null; render(); }
-});
-
-(async () => {
-  render();   // squelette pendant le chargement de la session
-  const { data:{ session } } = await sb.auth.getSession();
-  if(session){
-    await afterAuth();
-    const last = LS.get('gd:last');
-    if(last && PROFILE && MYGAMES.some(g => g.id === last)){
-      try{ await openGame(last); }catch(e){ render(); }
-    }
-  }
-})();
-</script>
-</body>
-</html>
+  if(a === 'account')     return sheetAccount();
+  if(a === 'leavegame')   return leaveGameData(el.dataset.id);
+  if(a === 'delgame')     return deleteGame(el.dataset.id);
+  if(a === 'delaccount')  return deleteAccount();
+  if(a === 'repseudo'){
+    const ps = ($('#iPseudo2').value || '').trim();
+ 
