@@ -183,7 +183,7 @@ footer button{background:none;border:none;color:var(--dim);text-decoration:under
   <div class="meta" id="topMeta"></div>
 </header>
 
-<main id="app"></main>
+<main id="app"><div class="empty" style="padding-top:30vh"><div class="g">Embarquement…</div></div></main>
 
 <nav id="nav" hidden>
   <button data-act="tab" data-tab="mine"><span class="ico">🎫</span>Sélection</button>
@@ -194,6 +194,36 @@ footer button{background:none;border:none;color:var(--dim);text-decoration:under
 <div id="veil" data-act="closesheet"></div>
 <div id="sheet"></div>
 <div id="toast"></div>
+
+<script>
+/* Vigie de démarrage : si le module principal ne boote pas en 4 s,
+   on explique pourquoi au lieu de laisser une page vide. */
+window.__GD = { booted: false, err: null };
+window.addEventListener('error', function(e){
+  if(!window.__GD.booted) window.__GD.err = e.message || String(e.error || '');
+});
+setTimeout(function(){
+  if(window.__GD.booted) return;
+  var isFile = location.protocol === 'file:';
+  document.getElementById('app').innerHTML =
+    '<div class="card gold"><h2>L’app n’a pas pu démarrer</h2>'
+    + '<p class="mut" style="margin-top:8px">'
+    + (window.__GD.err ? 'Erreur : ' + window.__GD.err : 'Le script principal ne s’est pas chargé.')
+    + '</p><div class="sep"></div>'
+    + (isFile
+      ? '<p class="mut"><b style="color:var(--mum)">Cause détectée :</b> le fichier est ouvert en double-clic (adresse en <b>file://</b>). '
+        + 'Les modules JS et l’authentification exigent un vrai serveur web.</p>'
+        + '<p class="mut" style="margin-top:8px">Solution en 10 secondes — Terminal, dans le dossier du fichier :</p>'
+        + '<p style="font-family:monospace;font-size:13px;background:var(--velvet);border-radius:8px;padding:10px;margin-top:6px">python3 -m http.server 8000</p>'
+        + '<p class="mut" style="margin-top:8px">puis ouvre <b style="color:var(--bone)">http://localhost:8000</b>. '
+        + 'Ou pousse le fichier sur GitHub Pages, comme la v2.</p>'
+      : '<p class="mut">Causes fréquentes :</p>'
+        + '<p class="mut" style="margin-top:6px">1. Le réseau bloque <b>esm.sh</b> (librairie Supabase) — essaie en 4G ou hors VPN/proxy d’entreprise.</p>'
+        + '<p class="mut" style="margin-top:6px">2. Navigateur trop ancien (il faut Safari 15+, Chrome/Edge/Firefox récents).</p>'
+        + '<p class="mut" style="margin-top:6px">3. Ancienne version en cache — recharge en forçant (Cmd+Maj+R).</p>')
+    + '</div>';
+}, 4000);
+</script>
 
 <script type="module">
 'use strict';
@@ -321,9 +351,16 @@ async function wikiDates(qids){
 /* ══════════════════════════════════════════════════════════════
    4. SUPABASE
    ══════════════════════════════════════════════════════════════ */
-const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+let createClient;
+try{
+  ({ createClient } = await import('https://esm.sh/@supabase/supabase-js@2'));
+}catch(e){
+  window.__GD.err = 'Impossible de charger la librairie Supabase depuis esm.sh (réseau bloqué ?).';
+  throw e;
+}
 const sb = createClient(CFG.url.trim().replace(/\/+$/, ''), CFG.key.trim(),
                         { realtime: { params: { eventsPerSecond: 5 } } });
+window.__GD.booted = true;
 
 /* ══════════════════════════════════════════════════════════════
    5. ÉTAT CLIENT
@@ -1124,4 +1161,80 @@ document.addEventListener('click', e => {
   if(a === 'delaccount')  return deleteAccount();
   if(a === 'repseudo'){
     const ps = ($('#iPseudo2').value || '').trim();
- 
+    if(!ps) return toast('Il faut un pseudo.', true);
+    const done = busy(el);
+    return savePseudo(ps).then(() => toast('Pseudo mis à jour.')).finally(done);
+  }
+  if(a === 'search')      return sheetSearch();
+  if(a === 'pick')        return pickResult(+el.dataset.i);
+  if(a === 'reserve'){ const done = busy(el, 'Réservation…'); return addPick().finally(done); }
+  if(a === 'unpick')      return removePick(el.dataset.id);
+  if(a === 'check'){ toast('Consultation de Wikidata…'); return checkDeaths(true); }
+  if(a === 'forcecheck'){ closeSheet(); toast('Consultation de Wikidata…'); return checkDeaths(true); }
+  if(a === 'home')        return goHome();
+  if(a === 'signout')     return signOut();
+  if(a === 'tab'){ tab = el.dataset.tab; return render(); }
+  if(a === 'dur'){ LMIN = +el.dataset.min; return render(); }
+  if(a === 'launch'){ const done = busy(el, 'Départ…'); return launchGame(LMIN).finally(done); }
+  if(a === 'closephase')  return closePhase();
+  if(a === 'extend')      return extendPhase(+el.dataset.min);
+  if(a === 'kick')        return kick(el.dataset.uid);
+  if(a === 'open'){ const done = busy(el); return openGame(el.dataset.id).catch(e2 => fail('Ouverture', e2)).finally(done); }
+
+  if(a === 'share'){
+    const txt = 'Le Grand Départ — monte à bord avec le code ' + G.code + ' : ' + location.href.split('#')[0];
+    if(navigator.share) navigator.share({ text: txt }).catch(() => {});
+    else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(() => toast('Code copié.'));
+    else toast('Code : ' + G.code);
+    return;
+  }
+
+  if(a === 'signin' || a === 'signup'){
+    const em = ($('#iMail').value || '').trim().toLowerCase();
+    const pw = $('#iPass').value || '';
+    if(!/.+@.+\..+/.test(em)) return toast('Il faut un email valide.', true);
+    if(pw.length < 6) return toast('6 caractères minimum pour le mot de passe.', true);
+    const done = busy(el);
+    return (a === 'signin' ? signIn(em, pw) : signUp(em, pw))
+      .catch(e2 => fail('Compte', e2)).finally(done);
+  }
+  if(a === 'pseudo'){
+    const ps = ($('#iPseudo').value || '').trim();
+    if(!ps) return toast('Il faut un pseudo.', true);
+    const done = busy(el);
+    return savePseudo(ps).finally(done);
+  }
+  if(a === 'create'){
+    const nm = ($('#iGName').value || '').trim();
+    const done = busy(el, 'Création…');
+    return createGame(nm).catch(e2 => fail('Création de la partie', e2)).finally(done);
+  }
+  if(a === 'join'){
+    const c = ($('#iCode').value || '').trim();
+    if(c.length !== 4) return toast('Le code fait 4 lettres.', true);
+    const done = busy(el, 'Embarquement…');
+    return joinByCode(c).catch(e2 => fail('Embarquement', e2)).finally(done);
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   11. BOOT
+   ══════════════════════════════════════════════════════════════ */
+sb.auth.onAuthStateChange((ev) => {
+  if(ev === 'SIGNED_OUT'){ ME = null; PROFILE = null; G = null; render(); }
+});
+
+(async () => {
+  render();   // squelette pendant le chargement de la session
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session){
+    await afterAuth();
+    const last = LS.get('gd:last');
+    if(last && PROFILE && MYGAMES.some(g => g.id === last)){
+      try{ await openGame(last); }catch(e){ render(); }
+    }
+  }
+})();
+</script>
+</body>
+</html>
