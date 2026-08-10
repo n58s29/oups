@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1E2B24">
-<title>Oups.</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝</text></svg>">
+<meta name="theme-color" content="#16222E">
+<title>Le Grand Départ</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap');
 
 :root{
-  --velvet:#1E2B24; --velvet-2:#26362D; --velvet-3:#2F4237;
-  --bone:#EDE6D6; --dim:#B9B4A4; --brass:#C2A15A; --brass-2:#8f7a48;
+  --velvet:#16222E; --velvet-2:#1D2C3C; --velvet-3:#26394D;
+  --bone:#EDE6D6; --dim:#AFAC9E; --brass:#C2A15A; --brass-2:#8f7a48;
   --mum:#D96A45; --sage:#8FA895;
   --line:rgba(237,230,214,.13);
   --r:14px;
@@ -33,15 +33,15 @@ button,input{font:inherit;color:inherit}
   position:fixed;top:0;left:0;right:0;height:calc(var(--top) + env(safe-area-inset-top));
   padding:env(safe-area-inset-top) 14px 0;
   display:flex;align-items:center;gap:10px;
-  background:rgba(30,43,36,.94);backdrop-filter:blur(10px);
+  background:rgba(22,34,46,.94);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);z-index:40;
 }
-#top .mark{font-family:var(--display);font-weight:900;font-size:22px;letter-spacing:-.02em}
+#top .mark{font-family:var(--display);font-weight:900;font-size:19px;letter-spacing:-.02em;white-space:nowrap}
 #top .mark i{color:var(--brass);font-style:normal}
 #top .meta{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
-.pill{border:1px solid var(--brass-2);color:var(--brass);border-radius:999px;padding:3px 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
-.pill.live{border-color:var(--sage);color:var(--sage)}
-.pill.simu{border-color:var(--mum);color:var(--mum)}
+.pill{border:1px solid var(--brass-2);color:var(--brass);border-radius:999px;padding:3px 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;background:none;cursor:default}
+.pill.mumP{border-color:var(--mum);color:var(--mum)}
+button.pill{cursor:pointer}
 
 main{
   padding:calc(var(--top) + env(safe-area-inset-top) + 14px) 14px calc(var(--bot) + env(safe-area-inset-bottom) + 24px);
@@ -50,7 +50,7 @@ main{
 #nav{
   position:fixed;bottom:0;left:0;right:0;z-index:40;
   padding-bottom:env(safe-area-inset-bottom);
-  display:flex;background:rgba(30,43,36,.96);backdrop-filter:blur(10px);
+  display:flex;background:rgba(22,34,46,.96);backdrop-filter:blur(10px);
   border-top:1px solid var(--line);
 }
 #nav button{
@@ -62,7 +62,7 @@ main{
 #nav[hidden]{display:none}
 
 /* ---------- blocs ---------- */
-h1{font-family:var(--display);font-weight:900;font-size:clamp(46px,15vw,74px);line-height:.92;letter-spacing:-.03em}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(34px,10.5vw,54px);line-height:.96;letter-spacing:-.03em}
 h1 i{color:var(--brass);font-style:normal}
 h2{font-family:var(--display);font-weight:600;font-size:21px;margin-bottom:2px}
 .sub{color:var(--dim);font-size:13px;margin-bottom:16px}
@@ -85,7 +85,7 @@ h2{font-family:var(--display);font-weight:600;font-size:21px;margin-bottom:2px}
   background:var(--velvet-3);color:var(--bone);font-size:15px;font-weight:500;cursor:pointer;
 }
 .b:active{transform:scale(.985)}
-.b.or{background:var(--brass);color:#1a2620;font-weight:700}
+.b.or{background:var(--brass);color:#141f19;font-weight:700}
 .b.mort{background:rgba(217,106,69,.16);color:var(--mum)}
 .b.ghost{background:none;box-shadow:inset 0 0 0 1px var(--line);color:var(--dim)}
 .b.full{display:flex;width:100%}
@@ -96,7 +96,7 @@ input.f{
   background:var(--velvet-3);box-shadow:inset 0 0 0 1px var(--line);
 }
 input.f:focus{outline:none;box-shadow:inset 0 0 0 1px var(--brass)}
-input.f::placeholder{color:rgba(185,180,164,.45)}
+input.f::placeholder{color:rgba(175,172,158,.45)}
 input.code{text-align:center;font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:.35em;text-transform:uppercase}
 
 /* ---------- avatars & fiches ---------- */
@@ -111,31 +111,34 @@ input.code{text-align:center;font-family:var(--display);font-size:30px;font-weig
 .tile.dead{background:rgba(217,106,69,.08);box-shadow:inset 0 0 0 1px rgba(217,106,69,.35)}
 .tile .stamp{
   position:absolute;top:8px;right:-6px;transform:rotate(8deg);
-  font-family:var(--display);font-weight:900;font-style:italic;font-size:14px;color:var(--mum);
+  font-family:var(--display);font-weight:900;font-style:italic;font-size:13px;color:var(--mum);
   border:2px solid var(--mum);border-radius:6px;padding:1px 8px;opacity:.9;
 }
 .tag{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--velvet-3);color:var(--dim);white-space:nowrap}
 .tag.b{background:rgba(194,161,90,.16);color:var(--brass)}
 .tag.m{background:rgba(217,106,69,.16);color:var(--mum)}
 .tag.s{background:rgba(143,168,149,.16);color:var(--sage)}
+.x{background:none;border:none;color:var(--dim);font-size:20px;padding:8px;cursor:pointer;flex-shrink:0}
+.x:active{color:var(--mum)}
 
 /* ---------- progression ---------- */
 .bar{height:6px;border-radius:999px;background:var(--velvet-3);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--brass);transition:width .3s}
-.dots{display:flex;gap:5px;flex-wrap:wrap}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--velvet-3)}
-.dot.on{background:var(--sage)}
+
+/* ---------- compte à rebours ---------- */
+.cdBig{font-family:var(--display);font-weight:800;font-size:44px;letter-spacing:.02em;line-height:1.05;color:var(--brass)}
+.cdBig.late{color:var(--mum)}
 
 /* ---------- sticky action ---------- */
 .sticky{
   position:fixed;left:0;right:0;bottom:calc(var(--bot) + env(safe-area-inset-bottom));
   padding:10px 14px 12px;z-index:35;
-  background:linear-gradient(to top,rgba(30,43,36,.98) 55%,rgba(30,43,36,0));
+  background:linear-gradient(to top,rgba(22,34,46,.98) 55%,rgba(22,34,46,0));
 }
 .sticky .in{max-width:620px;margin:0 auto;display:flex;gap:8px}
 
 /* ---------- sheet ---------- */
-#veil{position:fixed;inset:0;background:rgba(8,12,10,.7);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+#veil{position:fixed;inset:0;background:rgba(6,10,14,.7);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
 #veil.on{opacity:1;pointer-events:auto}
 #sheet{
   position:fixed;left:0;right:0;bottom:0;z-index:61;
@@ -148,15 +151,16 @@ input.code{text-align:center;font-family:var(--display);font-size:30px;font-weig
 .handle{width:40px;height:4px;border-radius:999px;background:var(--line);margin:6px auto 14px}
 .res{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:none;padding:11px 4px;cursor:pointer;border-bottom:1px solid var(--line)}
 .res:last-child{border-bottom:none}
+.res:disabled{opacity:.5}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .chip{background:var(--velvet-3);border:none;border-radius:999px;padding:10px 14px;font-size:14px;cursor:pointer;min-height:42px}
-.chip.on{background:var(--brass);color:#1a2620;font-weight:700}
+.chip.on{background:var(--brass);color:#141f19;font-weight:700}
 
 /* ---------- toast ---------- */
 #toast{
   position:fixed;left:50%;bottom:calc(var(--bot) + env(safe-area-inset-bottom) + 74px);
   transform:translate(-50%,20px);z-index:80;max-width:92vw;
-  background:var(--brass);color:#1a2620;font-weight:600;font-size:14px;
+  background:var(--brass);color:#141f19;font-weight:600;font-size:14px;
   padding:11px 18px;border-radius:999px;text-align:center;
   opacity:0;pointer-events:none;transition:all .25s;
 }
@@ -175,15 +179,15 @@ footer button{background:none;border:none;color:var(--dim);text-decoration:under
 <body>
 
 <header id="top">
-  <div class="mark">Oups<i>.</i></div>
+  <div class="mark">Le Grand Départ<i>.</i></div>
   <div class="meta" id="topMeta"></div>
 </header>
 
 <main id="app"></main>
 
 <nav id="nav" hidden>
-  <button data-act="tab" data-tab="bids"><span class="ico">⚖</span>Enchères</button>
-  <button data-act="tab" data-tab="stable"><span class="ico">✝</span>Écurie</button>
+  <button data-act="tab" data-tab="mine"><span class="ico">🎫</span>Sélection</button>
+  <button data-act="tab" data-tab="quai"><span class="ico">🚉</span>Le quai</button>
   <button data-act="tab" data-tab="rank"><span class="ico">☰</span>Classement</button>
 </nav>
 
@@ -191,34 +195,26 @@ footer button{background:none;border:none;color:var(--dim);text-decoration:under
 <div id="sheet"></div>
 <div id="toast"></div>
 
-<script>
-(() => {
+<script type="module">
 'use strict';
 
 /* ══════════════════════════════════════════════════════════════
-   1. CONFIG — colle ici tes clés Supabase quand tu les auras.
-   Tant que c'est vide, l'app tourne en MODE SIMU (100 % local,
-   multi-onglets sur le même téléphone + potes fictifs).
+   1. CONFIG — mêmes clés que Oups v2 : les tables gd_* cohabitent
+   avec l'ancienne table games dans le même projet Supabase.
    ══════════════════════════════════════════════════════════════ */
 const CFG = {
-  url : 'https://puynraoxlespwvophzko.supabase.co',   // ex. 'https://xxxxxxxx.supabase.co'
-  key : 'sb_publishable_KlSdNqNkpdupsk527jlwaA_QGqYlzJa'    // clé "anon public" (publiable, elle est faite pour ça)
+  url : 'https://puynraoxlespwvophzko.supabase.co',
+  key : 'sb_publishable_KlSdNqNkpdupsk527jlwaA_QGqYlzJa'
 };
-
-const LIVE   = !!(CFG.url && CFG.key);
-const MAX    = 15;    // têtes par écurie
-const BUDGET = 500;   // millions par joueur
 const TODAY  = new Date();
 const SEASON = TODAY.getFullYear();
+const CHECK_EVERY_H = 6;   // au plus un check Wikidata toutes les 6 h par partie
 
 /* ══════════════════════════════════════════════════════════════
    2. UTILITAIRES
    ══════════════════════════════════════════════════════════════ */
 const $ = s => document.querySelector(s);
-const uid = () => Math.random().toString(36).slice(2, 9);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const M = n => n + ' M';
-const pick = a => a[Math.floor(Math.random() * a.length)];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
 
@@ -242,6 +238,16 @@ function ageAt(birth, ref){
   return a;
 }
 const ptsFor = a => a >= 90 ? 1 : Math.max(1, 90 - a);
+function cdown(ms){
+  if(ms <= 0) return '00:00';
+  const s = Math.floor(ms / 1000);
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600),
+        m = Math.floor(s % 3600 / 60), x = s % 60;
+  const p = n => String(n).padStart(2, '0');
+  if(d) return d + ' j ' + p(h) + ' h';
+  if(h) return h + ':' + p(m) + ':' + p(x);
+  return p(m) + ':' + p(x);
+}
 
 let toastT;
 function toast(msg, bad){
@@ -250,150 +256,34 @@ function toast(msg, bad){
   t.classList.toggle('bad', !!bad);
   t.classList.add('on');
   clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove('on'), 3200);
+  toastT = setTimeout(() => t.classList.remove('on'), bad ? 6000 : 3200);
 }
+function errText(e){
+  if(!e) return 'erreur inconnue';
+  if(typeof e === 'string') return e;
+  return [e.message, e.details, e.hint, e.code ? '(' + e.code + ')' : '']
+    .filter(Boolean).join(' · ') || JSON.stringify(e).slice(0, 200);
+}
+function fail(where, e){
+  console.error('[GD]', where, e);
+  toast(where + ' : ' + errText(e), true);
+}
+window.addEventListener('unhandledrejection', e => fail('Erreur', e.reason));
+window.addEventListener('error', e => fail('Erreur', e.error || e.message));
+
+function busy(el, txt){
+  if(!el) return () => {};
+  const old = el.innerHTML;
+  el.disabled = true;
+  el.innerHTML = txt || 'Un instant…';
+  return () => { el.disabled = false; el.innerHTML = old; };
+}
+const LS = { get:k => { try{ return localStorage.getItem(k); }catch(e){ return null; } },
+             set:(k,v) => { try{ localStorage.setItem(k,v); }catch(e){} },
+             del:k => { try{ localStorage.removeItem(k); }catch(e){} } };
 
 /* ══════════════════════════════════════════════════════════════
-   3. LOGIQUE DE JEU (fonctions pures sur l'état)
-   ══════════════════════════════════════════════════════════════ */
-function blankState(code, hostId, hostName){
-  return {
-    fmt: 1, code, season: SEASON, hostId,
-    phase: 'lobby',            // lobby | bids | reveal
-    round: 1, version: 0,
-    players: [{id: hostId, name: hostName, budget: BUDGET, ready: false, bot: false}],
-    celebs: [],                // {id,qid,name,desc,thumb,birth,value,ownerId,dead,deathDate,ageDeath,points}
-    bids: [],                  // tour en cours uniquement
-    log: []                    // procès-verbaux
-  };
-}
-const P        = (st, id) => st.players.find(p => p.id === id);
-const nameOf   = (st, id) => (P(st, id) || {name:'?'}).name;
-const stableOf = (st, id) => st.celebs.filter(c => c.ownerId === id);
-const bidsOf   = (st, id) => st.bids.filter(b => b.playerId === id);
-const slotsOf  = (st, id) => MAX - stableOf(st, id).length;
-const leftOf   = (st, id) => slotsOf(st, id) - bidsOf(st, id).length;
-const heldOf   = (st, id) => bidsOf(st, id).reduce((s, b) => s + b.amount, 0);
-const freeOf   = (st, id) => (P(st, id) || {budget:0}).budget - heldOf(st, id);
-const ptsOf    = (st, id) => stableOf(st, id).filter(c => c.dead).reduce((s, c) => s + c.points, 0);
-
-/** Adjuge le tour : plus haute mise, égalité → première posée. */
-function resolveRound(st){
-  const groups = {};
-  st.bids.forEach(b => (groups[b.celebId] = groups[b.celebId] || []).push(b));
-  const lots = [];
-  Object.keys(groups).forEach(cid => {
-    const c = st.celebs.find(x => x.id === cid);
-    if(!c || c.ownerId) return;
-    const list = groups[cid].slice().sort((a, b) => b.amount - a.amount || a.ts - b.ts);
-    let win = null;
-    for(const b of list){
-      const p = P(st, b.playerId);
-      if(p && p.budget >= b.amount && stableOf(st, p.id).length < MAX){
-        p.budget -= b.amount; c.ownerId = p.id; win = b; break;
-      }
-    }
-    lots.push({
-      celeb: c.name, thumb: c.thumb || null, value: c.value,
-      winner: win ? nameOf(st, win.playerId) : null,
-      winnerId: win ? win.playerId : null,
-      amount: win ? win.amount : null,
-      offers: list.map(b => ({name: nameOf(st, b.playerId), amount: b.amount, win: win === b}))
-    });
-  });
-  lots.sort((a, b) => (b.amount || 0) - (a.amount || 0));
-  st.log.push({round: st.round, lots, at: Date.now()});
-  while(st.log.length > 10) st.log.shift();
-  st.bids = [];
-  st.celebs = st.celebs.filter(c => c.ownerId || c.dead);   // les invendus disparaissent
-  st.players.forEach(p => p.ready = false);
-  st.phase = 'reveal';
-}
-
-/* ══════════════════════════════════════════════════════════════
-   4. RÉSEAU — deux adaptateurs, même interface.
-      create / load / commit(fn) / subscribe(cb) / close
-   ══════════════════════════════════════════════════════════════ */
-function LocalNet(code){
-  const K = 'oups:g:' + code;
-  let bc = null, poll = null, listener = null;
-  const read  = () => { try{ return JSON.parse(localStorage.getItem(K)); }catch(e){ return null; } };
-  const write = st => { localStorage.setItem(K, JSON.stringify(st)); if(bc) bc.postMessage(st.version); };
-  return {
-    mode: 'simu', code,
-    async exists(){ return !!read(); },
-    async create(st){ write(st); return st; },
-    async load(){ return read(); },
-    async commit(fn){
-      const st = read();
-      if(!st) return null;
-      if(fn(st) === false) return st;
-      st.version = (st.version || 0) + 1;
-      write(st);
-      return st;
-    },
-    subscribe(cb){
-      listener = cb;
-      try{
-        bc = new BroadcastChannel('oups:' + code);
-        bc.onmessage = () => { const s = read(); if(s) cb(s); };
-      }catch(e){}
-      window.addEventListener('storage', e => { if(e.key === K){ const s = read(); if(s) cb(s); } });
-      poll = setInterval(() => { const s = read(); if(s) cb(s); }, 1500);
-    },
-    close(){ if(bc) bc.close(); clearInterval(poll); }
-  };
-}
-
-async function SupaNet(code){
-  const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-  const sb = createClient(CFG.url, CFG.key, { realtime: { params: { eventsPerSecond: 5 } } });
-  let ch = null, poll = null;
-  const row = async () => {
-    const { data } = await sb.from('games').select('state,version').eq('code', code).maybeSingle();
-    return data || null;
-  };
-  return {
-    mode: 'live', code,
-    async exists(){ return !!(await row()); },
-    async create(st){
-      const { error } = await sb.from('games').insert({ code, state: st, version: 0 });
-      if(error) throw error;
-      return st;
-    },
-    async load(){ const r = await row(); return r ? r.state : null; },
-    async commit(fn){
-      for(let i = 0; i < 7; i++){
-        const r = await row();
-        if(!r) return null;
-        const st = r.state;
-        if(fn(st) === false) return st;
-        st.version = r.version + 1;
-        const { data } = await sb.from('games')
-          .update({ state: st, version: r.version + 1 })
-          .eq('code', code).eq('version', r.version).select('version');
-        if(data && data.length) return st;
-        await sleep(120 + Math.random() * 260);   // collision : on relit et on rejoue
-      }
-      toast('Synchro encombrée, réessaie.', true);
-      return null;
-    },
-    subscribe(cb){
-      ch = sb.channel('oups:' + code)
-        .on('postgres_changes',
-            { event: 'UPDATE', schema: 'public', table: 'games', filter: 'code=eq.' + code },
-            p => { if(p.new && p.new.state) cb(p.new.state); })
-        .subscribe();
-      poll = setInterval(async () => { const s = await this.load(); if(s) cb(s); }, 5000);  // filet de sécurité
-    },
-    close(){ if(ch) ch.unsubscribe(); clearInterval(poll); }
-  };
-}
-
-const makeNet = code => LIVE ? SupaNet(code) : Promise.resolve(LocalNet(code));
-
-/* ══════════════════════════════════════════════════════════════
-   5. WIKIPÉDIA / WIKIDATA
+   3. WIKIPÉDIA / WIKIDATA
    ══════════════════════════════════════════════════════════════ */
 async function wikiSearch(q){
   const url = 'https://fr.wikipedia.org/w/api.php?action=query&generator=prefixsearch'
@@ -407,7 +297,7 @@ async function wikiSearch(q){
     .map(p => ({ name: p.title, desc: p.description || '', qid: p.pageprops.wikibase_item,
                  thumb: p.thumbnail ? p.thumbnail.source : null }));
 }
-/** Dates pour 1..n QIDs en une requête. → {qid:{birth,death}} */
+/** Dates pour 1..n QIDs, par lots de 40. → {qid:{birth,death}} */
 async function wikiDates(qids){
   if(!qids.length) return {};
   const out = {};
@@ -429,244 +319,326 @@ async function wikiDates(qids){
 }
 
 /* ══════════════════════════════════════════════════════════════
-   6. ÉTAT CLIENT
+   4. SUPABASE
    ══════════════════════════════════════════════════════════════ */
-let net = null;          // adaptateur réseau
-let S = null;            // état partagé
-let ME = null;           // mon playerId
-let tab = 'bids';
-let peek = false;        // on consulte un onglet pendant la révélation
-let RES = [];            // résultats de recherche courants
-let DRAFT = null;        // fiche en cours de mise
-let seenDeaths = new Set();
-let lastRevealSeen = 0;
+const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+const sb = createClient(CFG.url.trim().replace(/\/+$/, ''), CFG.key.trim(),
+                        { realtime: { params: { eventsPerSecond: 5 } } });
 
-const LS = { get:k => { try{ return localStorage.getItem(k); }catch(e){ return null; } },
-             set:(k,v) => { try{ localStorage.setItem(k,v); }catch(e){} },
-             del:k => { try{ localStorage.removeItem(k); }catch(e){} } };
+/* ══════════════════════════════════════════════════════════════
+   5. ÉTAT CLIENT
+   ══════════════════════════════════════════════════════════════ */
+let ME = null;         // user id (auth.uid)
+let PROFILE = null;    // {id, pseudo}
+let MYGAMES = [];      // pour l'accueil
+let G = null;          // partie ouverte (ligne gd_games)
+let PARTS = [];        // participants (+ pseudo via embed)
+let PICKS = [];        // tous les picks de la partie
+let tab = 'mine';
+let RES = [];          // résultats de recherche
+let DRAFT = null;      // fiche en cours de réservation
+let LMIN = 60;         // durée de phase sélectionnée par l'admin (lobby)
+let ch = null, poll = null, cdT = null;
+
+const nameOf = uid => {
+  const p = PARTS.find(x => x.user_id === uid);
+  return p && p.gd_profiles ? p.gd_profiles.pseudo : '?';
+};
+const picksOf = uid => PICKS.filter(p => p.user_id === uid);
+const myPicks = () => picksOf(ME);
+const ptsOf   = uid => picksOf(uid).reduce((s, p) => s + (p.points || 0), 0);
+const endsMs  = () => G && G.choice_ends_at ? new Date(G.choice_ends_at).getTime() : null;
+
+/** lobby | choice | live — dérivé de l'horloge, aucune transition serveur. */
+function phase(){
+  if(!G) return null;
+  const e = endsMs();
+  if(e === null) return 'lobby';
+  return Date.now() < e ? 'choice' : 'live';
+}
+const isAdmin = () => G && G.admin_id === ME;
+
+/* ══════════════════════════════════════════════════════════════
+   6. DONNÉES
+   ══════════════════════════════════════════════════════════════ */
+async function loadMyGames(){
+  const { data, error } = await sb.from('gd_participants')
+    .select('game_id, gd_games(id, code, name, season, choice_ends_at, admin_id, created_at)')
+    .eq('user_id', ME);
+  if(error) throw error;
+  MYGAMES = (data || []).map(r => r.gd_games).filter(Boolean)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+}
+
+async function fetchBundle(gid){
+  const [g, pa, pk] = await Promise.all([
+    sb.from('gd_games').select('*').eq('id', gid).maybeSingle(),
+    sb.from('gd_participants').select('*, gd_profiles(pseudo)').eq('game_id', gid),
+    sb.from('gd_picks').select('*').eq('game_id', gid)
+  ]);
+  if(g.error) throw g.error;
+  if(pa.error) throw pa.error;
+  if(pk.error) throw pk.error;
+  return { game: g.data, parts: pa.data || [], picks: pk.data || [] };
+}
+
+async function openGame(gid){
+  const b = await fetchBundle(gid);
+  if(!b.game){ toast('Cette partie n’existe plus.', true); return goHome(); }
+  G = b.game; PARTS = b.parts; PICKS = b.picks;
+  tab = 'mine';
+  LS.set('gd:last', G.id);
+  subscribe();
+  render();
+  if(phase() === 'live'){
+    showDigest();
+    checkDeaths(false);
+  }
+  touchSeen();
+}
+
+async function refreshGame(){
+  if(!G) return;
+  try{
+    const b = await fetchBundle(G.id);
+    if(!b.game) return;
+    const newDeaths = b.picks.filter(p => p.dead && !PICKS.some(x => x.id === p.id && x.dead));
+    G = b.game; PARTS = b.parts; PICKS = b.picks;
+    newDeaths.forEach(announceDeath);
+    render();
+  }catch(e){ /* réseau capricieux : le poll réessaiera */ }
+}
+
+function announceDeath(p){
+  toast('🚂 Grand départ : ' + p.name + ' — ' + (p.points ? '+' + p.points + ' pts pour ' + nameOf(p.user_id) : 'hors délai pour ' + nameOf(p.user_id)) + '.', true);
+}
+
+function subscribe(){
+  unsubscribe();
+  ch = sb.channel('gd:' + G.id)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'gd_picks', filter: 'game_id=eq.' + G.id }, p => {
+      if(p.eventType === 'INSERT' && p.new){
+        if(!PICKS.some(x => x.id === p.new.id)) PICKS.push(p.new);
+      } else if(p.eventType === 'DELETE' && p.old){
+        PICKS = PICKS.filter(x => x.id !== p.old.id);
+      } else if(p.eventType === 'UPDATE' && p.new){
+        const before = PICKS.find(x => x.id === p.new.id);
+        PICKS = PICKS.map(x => x.id === p.new.id ? p.new : x);
+        if(p.new.dead && (!before || !before.dead)) announceDeath(p.new);
+      }
+      render();
+    })
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'gd_participants', filter: 'game_id=eq.' + G.id }, () => {
+      // il faut le pseudo → on refetch la liste (léger)
+      sb.from('gd_participants').select('*, gd_profiles(pseudo)').eq('game_id', G.id)
+        .then(r => { if(!r.error){ PARTS = r.data || []; render(); } });
+    })
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'gd_games', filter: 'id=eq.' + G.id }, p => {
+      if(p.new){ G = p.new; render(); }
+    })
+    .subscribe();
+  // filet : realtime coupé → on resynchronise quand l'onglet est visible
+  poll = setInterval(() => { if(document.visibilityState === 'visible') refreshGame(); }, 30000);
+  // horloge de la phase de choix
+  cdT = setInterval(() => {
+    if(!G || phase() !== 'choice'){
+      if($('#cd') || $('#cdp')) render();   // l'horloge vient de basculer → plein rendu
+      return;
+    }
+    const left = endsMs() - Date.now();
+    const el = $('#cd'); if(el){ el.textContent = cdown(left); el.classList.toggle('late', left < 60000); }
+    const el2 = $('#cdp'); if(el2) el2.textContent = cdown(left);
+  }, 1000);
+}
+function unsubscribe(){
+  if(ch){ ch.unsubscribe(); ch = null; }
+  clearInterval(poll); clearInterval(cdT);
+}
+
+function touchSeen(){
+  if(!G || !ME) return;
+  sb.from('gd_participants').update({ last_seen_at: new Date().toISOString() })
+    .eq('game_id', G.id).eq('user_id', ME).then(() => {});
+}
 
 /* ══════════════════════════════════════════════════════════════
    7. ACTIONS
    ══════════════════════════════════════════════════════════════ */
 const randCode = () => Array.from({length:4}, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ'[Math.floor(Math.random()*24)]).join('');
 
-async function createGame(name){
-  let code, tries = 0;
-  do { code = randCode(); net = await makeNet(code); tries++; } while(await net.exists() && tries < 8);
-  ME = 'p' + uid();
-  const st = blankState(code, ME, name);
-  await net.create(st);
-  LS.set('oups:me:' + code, ME); LS.set('oups:name', name); LS.set('oups:last', code);
-  await attach(st);
-}
-
-async function joinGame(code, name){
-  code = code.toUpperCase().trim();
-  net = await makeNet(code);
-  const st0 = await net.load();
-  if(!st0){ toast('Aucune partie avec ce code.', true); return; }
-  const known = LS.get('oups:me:' + code);
-  if(known && P(st0, known)){                       // reprise d'identité
-    ME = known;
-    await net.commit(s => { const p = P(s, ME); if(p) p.name = name || p.name; });
-  } else {
-    if(st0.phase !== 'lobby'){ toast('Partie déjà lancée — trop tard.', true); return; }
-    if(st0.players.some(p => p.name.toLowerCase() === name.toLowerCase())){ toast('Ce prénom est déjà pris.', true); return; }
-    ME = 'p' + uid();
-    await net.commit(s => {
-      if(s.phase !== 'lobby') return false;
-      s.players.push({ id: ME, name, budget: BUDGET, ready: false, bot: false });
-    });
-    LS.set('oups:me:' + code, ME);
+async function signIn(email, pass){
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if(error){
+    if(/invalid login/i.test(error.message))
+      return toast('Email ou mot de passe inconnu. Nouveau ? Touche « Créer un compte ».', true);
+    return fail('Connexion', error);
   }
-  LS.set('oups:name', name); LS.set('oups:last', code);
-  await attach(await net.load());
+  await afterAuth();
 }
-
-async function attach(st){
-  S = st;
-  st.celebs.filter(c => c.dead).forEach(c => seenDeaths.add(c.id));
-  lastRevealSeen = st.log.length;
-  net.subscribe(onRemote);
-  render();
-  checkDeaths();
-  setInterval(checkDeaths, 240000);
-  setInterval(botTick, 2200);
+async function signUp(email, pass){
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+  if(error){
+    if(/already registered/i.test(error.message))
+      return toast('Ce compte existe déjà : utilise « Connexion ».', true);
+    return fail('Création du compte', error);
+  }
+  if(!data.session)
+    return toast('Compte créé mais confirmation email active côté Supabase — l’organisateur doit la désactiver (voir README).', true);
+  await afterAuth();
 }
-
-function onRemote(st){
-  if(!st || (S && st.version < S.version)) return;
-  if(S && st.version === S.version) return;      // rien de neuf : on ne redessine pas
-  const before = S;
-  S = st;
-  if(before && st.phase !== before.phase) peek = false;
-  // notification des nouveaux décès
-  st.celebs.filter(c => c.dead && !seenDeaths.has(c.id)).forEach(c => {
-    seenDeaths.add(c.id);
-    toast('Oups. ' + c.name + ' — ' + c.points + ' pts pour ' + nameOf(st, c.ownerId) + '.', true);
-  });
-  if(before && st.phase === 'reveal' && before.phase !== 'reveal') tab = 'bids';
-  maybeResolve();
+async function afterAuth(){
+  const { data:{ user } } = await sb.auth.getUser();
+  ME = user ? user.id : null;
+  if(!ME) return render();
+  const { data } = await sb.from('gd_profiles').select('*').eq('id', ME).maybeSingle();
+  PROFILE = data || null;
+  if(PROFILE){ await loadMyGames(); }
   render();
 }
-
-/** Dès que tout le monde est prêt, le premier client qui s'en aperçoit adjuge. */
-function maybeResolve(){
-  if(!S || S.phase !== 'bids') return;
-  const humans = S.players;
-  if(!humans.length || !humans.every(p => p.ready)) return;
-  net.commit(st => {
-    if(st.phase !== 'bids') return false;
-    if(!st.players.every(p => p.ready)) return false;
-    resolveRound(st);
-  }).then(st => { if(st){ S = st; render(); } });
+async function savePseudo(pseudo){
+  const { error } = await sb.from('gd_profiles').upsert({ id: ME, pseudo });
+  if(error) return fail('Pseudo', error);
+  PROFILE = { id: ME, pseudo };
+  await loadMyGames();
+  render();
+}
+async function signOut(){
+  unsubscribe();
+  await sb.auth.signOut();
+  ME = null; PROFILE = null; G = null; MYGAMES = [];
+  LS.del('gd:last');
+  render();
 }
 
-function sealBid(){
-  if(!DRAFT) return;
-  const amount = DRAFT.amount;
-  if(!(amount >= 1)) return toast('Choisis une mise.', true);
-  net.commit(st => {
-    if(st.phase !== 'bids') return false;
-    if(leftOf(st, ME) <= 0){ toast('Plus de place ce tour.', true); return false; }
-    if(amount > freeOf(st, ME)){ toast('Budget insuffisant : ' + M(freeOf(st, ME)) + ' libre.', true); return false; }
-    const same = c => DRAFT.qid ? c.qid === DRAFT.qid : (!c.qid && c.name.toLowerCase() === DRAFT.name.toLowerCase());
-    let c = st.celebs.find(same);
-    if(c && (c.ownerId || c.dead)){ toast('Déjà pris. Exclusivité.', true); return false; }
-    if(c && st.bids.some(b => b.celebId === c.id && b.playerId === ME)){ toast('Tu as déjà misé sur elle ou lui.', true); return false; }
-    if(!c){
-      c = { id: 'c' + uid(), qid: DRAFT.qid, name: DRAFT.name, desc: DRAFT.desc, thumb: DRAFT.thumb,
-            birth: DRAFT.birth, value: DRAFT.value, ownerId: null,
-            dead: false, deathDate: null, ageDeath: null, points: 0 };
-      st.celebs.push(c);
+async function createGame(name){
+  for(let i = 0; i < 8; i++){
+    const code = randCode();
+    const { data, error } = await sb.from('gd_games')
+      .insert({ code, name: name || 'Le Grand Départ', admin_id: ME }).select().maybeSingle();
+    if(!error && data){
+      await sb.from('gd_participants').insert({ game_id: data.id, user_id: ME });
+      return openGame(data.id);
     }
-    st.bids.push({ id: 'b' + uid(), round: st.round, playerId: ME, celebId: c.id, amount, ts: Date.now() });
-    const p = P(st, ME); if(p) p.ready = false;
-  }).then(st => {
-    if(!st) return;
-    S = st; DRAFT = null; RES = []; closeSheet();
-    toast('Scellé : ' + M(amount) + '. Personne ne le voit.');
-    render();
+    if(error && error.code !== '23505') throw error;
+  }
+  toast('Impossible de tirer un code libre, réessaie.', true);
+}
+
+async function joinByCode(code){
+  code = code.toUpperCase().trim();
+  const { data: g, error } = await sb.from('gd_games').select('id').eq('code', code).maybeSingle();
+  if(error) return fail('Recherche de la partie', error);
+  if(!g) return toast('Aucune partie avec ce code.', true);
+  const ins = await sb.from('gd_participants').insert({ game_id: g.id, user_id: ME });
+  if(ins.error && ins.error.code !== '23505') return fail('Inscription', ins.error);
+  await openGame(g.id);   // arriver en cours de partie : toujours permis
+}
+
+function goHome(){
+  unsubscribe();
+  G = null; PARTS = []; PICKS = [];
+  LS.del('gd:last');
+  loadMyGames().then(render).catch(() => render());
+}
+
+/* --- admin --- */
+async function launchGame(minutes){
+  const ends = new Date(Date.now() + minutes * 60000).toISOString();
+  const { error } = await sb.from('gd_games').update({ choice_ends_at: ends }).eq('id', G.id);
+  if(error) return fail('Départ', error);
+  await refreshGame();
+  toast('🚦 C’est parti ! ' + cdown(minutes * 60000) + ' pour choisir.');
+}
+async function closePhase(){
+  const { error } = await sb.from('gd_games').update({ choice_ends_at: new Date().toISOString() }).eq('id', G.id);
+  if(error) return fail('Clôture', error);
+  closeSheet(); await refreshGame();
+  toast('Phase de choix terminée. Bonne saison.');
+}
+async function extendPhase(minutes){
+  const base = Math.max(Date.now(), endsMs() || Date.now());
+  const { error } = await sb.from('gd_games')
+    .update({ choice_ends_at: new Date(base + minutes * 60000).toISOString() }).eq('id', G.id);
+  if(error) return fail('Prolongation', error);
+  closeSheet(); await refreshGame();
+  toast('Phase prolongée.');
+}
+async function kick(uid){
+  if(!confirm('Sortir ' + nameOf(uid) + ' de la partie ? Ses réservations seront libérées.')) return;
+  const { error } = await sb.rpc('gd_kick', { p_game: G.id, p_user: uid });
+  if(error) return fail('Éviction', error);
+  closeSheet(); await refreshGame();
+}
+
+/* --- picks --- */
+async function addPick(){
+  if(!DRAFT) return;
+  const { error } = await sb.from('gd_picks').insert({
+    game_id: G.id, user_id: ME, qid: DRAFT.qid, name: DRAFT.name,
+    descr: DRAFT.desc, thumb: DRAFT.thumb, birth: DRAFT.birth, value: DRAFT.value
   });
+  if(error){
+    await refreshGame();
+    if(error.code === '23505'){
+      const t = PICKS.find(p => p.qid === DRAFT.qid);
+      return toast('Trop tard : ' + DRAFT.name + ' est à ' + (t ? nameOf(t.user_id) : 'quelqu’un d’autre') + '.', true);
+    }
+    if(/QUOTA/.test(error.message || ''))
+      return toast('Sélection pleine : ' + G.max_picks + ' têtes maximum.', true);
+    return fail('Réservation', error);
+  }
+  const name = DRAFT.name, v = DRAFT.value;
+  DRAFT = null; RES = []; closeSheet();
+  toast('🎫 ' + name + ' — ' + v + ' pts si départ cette saison.');
+  await refreshGame();
+}
+async function removePick(id){
+  const p = PICKS.find(x => x.id === id);
+  const { error } = await sb.from('gd_picks').delete().eq('id', id).eq('user_id', ME);
+  if(error) return fail('Retrait', error);
+  if(p) toast(p.name + ' rendu·e au quai. À vos risques.');
+  await refreshGame();
 }
 
-function toggleReady(){
-  net.commit(st => {
-    const p = P(st, ME); if(!p) return false;
-    p.ready = !p.ready;
-  }).then(st => { if(st){ S = st; maybeResolve(); render(); } });
-}
-
-function startGame(){
-  net.commit(st => {
-    if(st.phase !== 'lobby') return false;
-    if(st.players.length < 2){ toast('Il faut au moins 2 joueurs.', true); return false; }
-    st.phase = 'bids';
-    st.players.forEach(p => p.ready = false);
-  }).then(st => { if(st){ S = st; render(); } });
-}
-
-function nextRound(){
-  net.commit(st => {
-    if(st.phase !== 'reveal') return false;
-    st.round++;
-    st.phase = 'bids';
-    st.players.forEach(p => p.ready = false);
-  }).then(st => { if(st){ S = st; tab = 'bids'; peek = false; render(); } });
-}
-
-/** Vérifie sur Wikidata si des membres d'écurie sont décédés. Automatique. */
-async function checkDeaths(silent){
-  if(!S) return;
-  const qids = S.celebs.filter(c => c.ownerId && !c.dead && c.qid).map(c => c.qid);
-  if(!qids.length) return;
+/* --- décès --- */
+async function checkDeaths(force){
+  if(!G || phase() === 'lobby') return;
+  if(!force && G.last_death_check
+     && Date.now() - new Date(G.last_death_check).getTime() < CHECK_EVERY_H * 3600e3) return;
+  const alive = PICKS.filter(p => !p.dead);
+  if(!alive.length){ if(force) toast('Aucune réservation à vérifier.'); return; }
   let data;
-  try { data = await wikiDates([...new Set(qids)]); }
-  catch(e){ if(!silent) toast('Wikidata injoignable.', true); return; }
-  const dead = Object.keys(data).filter(q => data[q] && data[q].death);
-  if(!dead.length){ if(!silent) toast('Tout le monde va bien. Dommage.'); return; }
-  const st = await net.commit(s => {
-    let n = 0;
-    s.celebs.forEach(c => {
-      if(c.dead || !c.qid || !data[c.qid] || !data[c.qid].death) return;
-      const d = data[c.qid].death;
-      const a = ageAt(c.birth || data[c.qid].birth, d);
-      c.dead = true; c.deathDate = d; c.ageDeath = a; c.points = ptsFor(a); n++;
-    });
-    if(!n) return false;
+  try{ data = await wikiDates([...new Set(alive.map(p => p.qid))]); }
+  catch(e){ if(force) toast('Wikidata injoignable.', true); return; }
+  const deaths = [];
+  alive.forEach(p => {
+    const d = data[p.qid];
+    if(d && d.death) deaths.push({ qid: p.qid, death: d.death, age: ageAt(p.birth || d.birth, d.death) });
   });
-  if(st){ S = st; onRemote(st); }
+  const { data: n, error } = await sb.rpc('gd_record_deaths',
+    { p_game: G.id, p_deaths: deaths, p_force: !!force });
+  if(error) return fail('Enregistrement des décès', error);
+  if(n > 0) await refreshGame();
+  else if(force && n === 0) toast('Tout le monde est à bord. Dommage.');
+  else if(force && n === -1) toast('Déjà vérifié il y a moins de ' + CHECK_EVERY_H + ' h.');
 }
 
-/* ---------- Mode simu : potes fictifs ---------- */
-const PRE = ['Élise','Ronan','Kevin','Margaux','Thibault','Anaïs','Jules','Camille','Bastien','Nadia'];
-const FN = ['Marthe','Gaston','Odette','Félicien','Berthe','Anselme','Lucienne','Aimé','Germaine','Casimir','Suzon','Prosper','Léontine','Ernest','Augustine','Célestin','Blanche','Honoré','Eugénie','Renée','Adrien','Antoinette','Gustave','Léon','Henriette','Fernand','Yvonne','Achille'];
-const LN = ['Beaulieu','Cantarel','Dubosc','Estival','Frachon','Gassend','Herbelin','Jonquet','Kervella','Labarthe','Mounier','Nogaret','Pelloutier','Rabastens','Saliou','Tardieu','Valadon','Wallon','Zonza','Bousquet','Delorme','Escoffier','Grandpierre','Houdart','Lantelme','Nivelle','Pradal','Roussille'];
-const JOB = ['ténor de sous-préfecture','doyenne du tricot compétitif','roi déchu du juke-box','crooner de supermarché','papesse des mots croisés','commissaire-priseur de vide-greniers','archiviste des scandales municipaux','recordwoman de pétanque nocturne','vétéran des jeux télévisés','harpiste de télésiège','philatéliste de combat','miss Cantal 1971','druide homologué','dernier crieur de journaux','moustachu officiel de la Foire de Paris','madone des aires d’autoroute'];
-
-function addBots(n){
-  net.commit(st => {
-    if(st.phase !== 'lobby') return false;
-    const used = st.players.map(p => p.name);
-    const free = PRE.filter(x => !used.includes(x));
-    for(let i = 0; i < n && i < free.length; i++)
-      st.players.push({ id: 'p' + uid(), name: free[i], budget: BUDGET, ready: false, bot: true });
-  }).then(st => { if(st){ S = st; render(); toast(n + ' potes fictifs invités.'); } });
-}
-
-function fakeCeleb(st){
-  let name, guard = 0;
-  do { name = pick(FN) + ' ' + pick(LN); guard++; }
-  while(st.celebs.some(c => c.name === name) && guard < 40);
-  const y = 1930 + Math.floor(Math.random() * 42);
-  const birth = { y, m: 1 + Math.floor(Math.random() * 12), d: 1 + Math.floor(Math.random() * 28) };
-  const c = { id: 'c' + uid(), qid: null, name, desc: pick(JOB), thumb: null, birth,
-              value: ptsFor(ageAt(birth, TODAY)), ownerId: null,
-              dead: false, deathDate: null, ageDeath: null, points: 0 };
-  st.celebs.push(c);
-  return c;
-}
-
-/** Les bots ne vivent qu'en mode simu, et sont pilotés par l'hôte. */
-function botTick(){
-  if(LIVE || !S || S.phase !== 'bids' || ME !== S.hostId) return;
-  const pool = S.players.filter(p => p.bot && !p.ready);
-  if(!pool.length) return;
-  const bot = pick(pool);
-  net.commit(st => {
-    const p = P(st, bot.id);
-    if(!p || p.ready || st.phase !== 'bids') return false;
-    const left = leftOf(st, p.id), free = freeOf(st, p.id);
-    if(left <= 0 || free < 1 || Math.random() < 0.3){ p.ready = true; return; }
-    // 50 % de chances de contrer une cible déjà convoitée → teste les égalités
-    const hot = st.celebs.filter(c => !c.ownerId && !c.dead
-      && st.bids.some(b => b.celebId === c.id && b.playerId !== p.id)
-      && !st.bids.some(b => b.celebId === c.id && b.playerId === p.id));
-    const c = (hot.length && Math.random() < 0.5) ? pick(hot) : fakeCeleb(st);
-    let amount = Math.max(1, Math.round(c.value * (0.6 + Math.random() * 1.1)));
-    amount = Math.min(amount, free - Math.max(0, left - 1));
-    if(amount < 1){ p.ready = true; return; }
-    st.bids.push({ id: 'b' + uid(), round: st.round, playerId: p.id, celebId: c.id, amount, ts: Date.now() });
-  }).then(st => { if(st){ S = st; maybeResolve(); render(); } });
-}
-
-/** Simu : tue une tête au hasard pour tester le flux de score. */
-function simDeath(){
-  net.commit(st => {
-    const alive = st.celebs.filter(c => c.ownerId && !c.dead);
-    if(!alive.length){ toast('Aucune écurie garnie.', true); return false; }
-    const c = pick(alive);
-    const a = Math.max(20, ageAt(c.birth, TODAY) - Math.floor(Math.random() * 3));
-    c.dead = true; c.ageDeath = a; c.points = ptsFor(a);
-    c.deathDate = { y: SEASON, m: TODAY.getMonth() + 1, d: TODAY.getDate() };
-  }).then(st => { if(st){ S = st; onRemote(st); } });
-}
-
-function leaveGame(){
-  if(net) net.close();
-  LS.del('oups:last');
-  S = null; ME = null; net = null;
-  render();
+function showDigest(){
+  const mine = PARTS.find(p => p.user_id === ME);
+  if(!mine) return;
+  const since = new Date(mine.last_seen_at).getTime();
+  const news = PICKS.filter(p => p.dead && p.death_seen_at && new Date(p.death_seen_at).getTime() > since);
+  if(!news.length) return;
+  openSheet('<h2>Pendant ton absence</h2>'
+    + '<p class="sub">' + news.length + ' grand' + (news.length > 1 ? 's' : '') + ' départ' + (news.length > 1 ? 's' : '') + ' annoncé' + (news.length > 1 ? 's' : '') + '.</p>'
+    + news.map(p => '<div class="tile dead"><div class="stamp">Parti·e</div><div class="row">'
+        + avatar(p)
+        + '<div class="grow"><div class="nm">' + esc(p.name) + '</div>'
+        + '<div class="ds">✝ ' + fdate(p.death_date) + ' · ' + p.age_death + ' ans</div></div>'
+        + '<div style="text-align:right"><span class="tag m">' + (p.points ? '+' + p.points + ' pts' : 'hors délai') + '</span>'
+        + '<div class="mut" style="font-size:11px;margin-top:3px">' + esc(nameOf(p.user_id)) + '</div></div>'
+        + '</div></div>').join('')
+    + '<div class="spacer"></div><button class="b or full" data-act="closesheet">Vu.</button>');
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -674,54 +646,49 @@ function leaveGame(){
    ══════════════════════════════════════════════════════════════ */
 function avatar(c, cls){
   const k = 'av ' + (cls || '') + (c.dead ? ' dead' : '');
-  return c.thumb ? '<img class="' + k + '" src="' + esc(c.thumb) + '" alt="">'
-                 : '<span class="' + k + ' ph">✝</span>';
+  return c.thumb ? '<img class="' + k + '" src="' + esc(c.thumb) + '" alt="" loading="lazy">'
+                 : '<span class="' + k + ' ph">🚂</span>';
 }
 
 function render(){
   const app = $('#app'), meta = $('#topMeta'), nav = $('#nav');
-  meta.innerHTML = S
-    ? '<span class="pill">' + esc(S.code) + '</span>'
-      + '<span class="pill ' + (LIVE ? 'live' : 'simu') + '">' + (LIVE ? 'live' : 'simu') + '</span>'
-    : '<span class="pill ' + (LIVE ? 'live' : 'simu') + '">' + (LIVE ? 'live' : 'simu') + '</span>';
+  const ph = phase();
 
-  if(!S){ nav.hidden = true; app.innerHTML = viewHome(); return; }
-  if(S.phase === 'lobby'){ nav.hidden = true; app.innerHTML = viewLobby(); return; }
-  if(S.phase === 'reveal' && !peek){ nav.hidden = true; app.innerHTML = viewReveal(); return; }
+  meta.innerHTML = G
+    ? '<span class="pill">' + esc(G.code) + '</span>'
+      + (ph === 'choice' ? '<span class="pill mumP num" id="cdp">' + cdown(endsMs() - Date.now()) + '</span>' : '')
+      + (isAdmin() && ph !== 'lobby' ? '<button class="pill" data-act="admin">⚙ admin</button>' : '')
+    : (PROFILE ? '<span class="pill">' + esc(PROFILE.pseudo) + '</span>' : '');
+
+  if(!ME){ nav.hidden = true; app.innerHTML = viewAuth(); return; }
+  if(!PROFILE){ nav.hidden = true; app.innerHTML = viewPseudo(); return; }
+  if(!G){ nav.hidden = true; app.innerHTML = viewHome(); return; }
+  if(ph === 'lobby'){ nav.hidden = true; app.innerHTML = viewLobby(); return; }
 
   nav.hidden = false;
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
-  app.innerHTML = (tab === 'bids' ? viewBids() : tab === 'stable' ? viewStable() : viewRank())
-    + (peek ? '<div class="spacer"></div><button class="b or full" data-act="next">Tour ' + (S.round + 1) + ' →</button>' : '');
+  app.innerHTML = tab === 'mine' ? viewMine() : tab === 'quai' ? viewQuai() : viewRank();
 }
 
-/* ---------- accueil ---------- */
-function viewHome(){
-  const name = esc(LS.get('oups:name') || '');
-  const last = LS.get('oups:last');
+/* ---------- auth ---------- */
+function viewAuth(){
   return `
   <div style="text-align:center;padding:14px 0 6px">
-    <div class="brass" style="letter-spacing:.6em;font-size:12px">✿ ✝ ✿</div>
-    <h1 style="margin-top:8px">Oups<i>.</i></h1>
+    <div class="brass" style="letter-spacing:.6em;font-size:12px">— 🚂 —</div>
+    <h1 style="margin-top:8px">Le Grand<br>Départ<i>.</i></h1>
     <p class="mut" style="font-family:var(--display);font-style:italic;margin-top:8px">
-      « Ce n’est qu’un au revoir. Enfin, surtout pour vous. »</p>
+      « Certains voyageurs ont une correspondance imprévue. »</p>
     <div class="pill" style="margin-top:14px;display:inline-block">Saison ${SEASON}</div>
   </div>
-
   <div class="card gold">
-    <input class="f" id="iName" placeholder="Ton prénom" value="${name}" autocomplete="given-name" maxlength="14">
+    <input class="f" id="iMail" type="email" placeholder="Ton email" autocomplete="email" inputmode="email">
     <div class="spacer"></div>
-    <button class="b or full" data-act="create">Créer une partie</button>
-  </div>
-
-  <div class="card">
-    <p class="mut" style="margin-bottom:10px">Rejoindre avec un code</p>
-    <input class="f code" id="iCode" placeholder="––––" maxlength="4" autocapitalize="characters" autocomplete="off" inputmode="text">
+    <input class="f" id="iPass" type="password" placeholder="Mot de passe (6 caractères min.)" autocomplete="current-password">
     <div class="spacer"></div>
-    <button class="b full" data-act="join">Rejoindre</button>
-    ${last ? `<div class="spacer"></div><button class="b ghost full sm" data-act="resume" data-code="${esc(last)}">Reprendre ${esc(last)}</button>` : ''}
+    <button class="b or full" data-act="signin">Connexion</button>
+    <div class="spacer"></div>
+    <button class="b ghost full" data-act="signup">Créer un compte</button>
   </div>
-
   <div class="card">
     <div class="row">
       <div class="grow">
@@ -731,224 +698,209 @@ function viewHome(){
       <button class="b sm ghost" data-act="rules">Lire</button>
     </div>
   </div>
+  <footer>Le Grand Départ · saison ${SEASON}</footer>`;
+}
 
-  ${LIVE ? '' : `<div class="card"><p class="mut">
-    <b class="mumc">Mode simu.</b> Aucune clé Supabase n’est configurée : la partie vit dans ce navigateur.
-    Tu peux inviter des potes fictifs qui misent tout seuls, et ouvrir un 2ᵉ onglet avec le même code
-    pour jouer à deux sur le même téléphone. Tout est prêt pour basculer en vrai multi-joueurs :
-    il suffit de coller 2 lignes de clés en haut du fichier.</p></div>`}
-  <footer>Oups. — <button data-act="rules">règles</button> · single-file, hébergeable sur GitHub Pages</footer>`;
+function viewPseudo(){
+  return `
+  <div style="text-align:center;padding:20px 0 10px">
+    <h1>Bienvenue<br>à bord<i>.</i></h1>
+  </div>
+  <div class="card gold">
+    <p class="mut" style="margin-bottom:10px">Le nom que les autres verront.</p>
+    <input class="f" id="iPseudo" placeholder="Ton pseudo" maxlength="20" autocomplete="nickname">
+    <div class="spacer"></div>
+    <button class="b or full" data-act="pseudo">C’est moi</button>
+  </div>`;
+}
+
+/* ---------- accueil ---------- */
+function viewHome(){
+  const lbl = g => {
+    const e = g.choice_ends_at ? new Date(g.choice_ends_at).getTime() : null;
+    if(e === null) return '<span class="tag">à quai</span>';
+    if(Date.now() < e) return '<span class="tag m">course en cours !</span>';
+    return '<span class="tag s">saison ' + g.season + '</span>';
+  };
+  return `
+  <div style="text-align:center;padding:6px 0 2px">
+    <h1 style="font-size:clamp(30px,9vw,44px)">Salut, ${esc(PROFILE.pseudo)}<i>.</i></h1>
+  </div>
+  <div class="spacer"></div>
+
+  ${MYGAMES.length ? `<h2>Tes parties</h2><p class="sub">Reprends là où tu en étais.</p>
+    <div class="card" style="padding:6px 16px">
+      ${MYGAMES.map(g => `<button class="res" data-act="open" data-id="${esc(g.id)}">
+        <span class="grow"><span class="nm" style="display:block">${esc(g.name)}</span>
+        <span class="ds">code ${esc(g.code)}</span></span>${lbl(g)}
+      </button>`).join('')}
+    </div>` : ''}
+
+  <div class="card">
+    <p class="mut" style="margin-bottom:10px">Rejoindre avec un code</p>
+    <input class="f code" id="iCode" placeholder="––––" maxlength="4" autocapitalize="characters" autocomplete="off" inputmode="text">
+    <div class="spacer"></div>
+    <button class="b full" data-act="join">Monter à bord</button>
+  </div>
+
+  <div class="card gold">
+    <p class="mut" style="margin-bottom:10px">Organiser un tournoi</p>
+    <input class="f" id="iGName" placeholder="Nom de la partie (optionnel)" maxlength="30">
+    <div class="spacer"></div>
+    <button class="b or full" data-act="create">Créer une partie</button>
+  </div>
+
+  <footer><button data-act="rules">règles</button> · <button data-act="signout">se déconnecter</button></footer>`;
 }
 
 /* ---------- lobby ---------- */
 function viewLobby(){
-  const host = S.hostId === ME;
+  const admin = isAdmin();
+  const durs = [[15,'15 min'],[30,'30 min'],[60,'1 h'],[120,'2 h'],[1440,'24 h']];
   return `
   <div class="card gold" style="text-align:center">
     <p class="mut">Code de la partie</p>
-    <div style="font-family:var(--display);font-size:52px;font-weight:800;letter-spacing:.2em;color:var(--brass);line-height:1.1">${esc(S.code)}</div>
+    <div style="font-family:var(--display);font-size:52px;font-weight:800;letter-spacing:.2em;color:var(--brass);line-height:1.1">${esc(G.code)}</div>
     <div class="spacer"></div>
     <button class="b sm ghost" data-act="share">Partager le code</button>
   </div>
 
-  <h2>À la veillée</h2>
-  <p class="sub">${S.players.length} joueur${S.players.length > 1 ? 's' : ''} · ${M(BUDGET)} chacun · ${MAX} têtes max</p>
+  <h2>Sur le quai</h2>
+  <p class="sub">${PARTS.length} joueur${PARTS.length > 1 ? 's' : ''} · ${G.max_picks} têtes max chacun</p>
   <div class="card">
-    ${S.players.map(p => `<div class="row" style="padding:9px 0">
-      <span class="av ph">${esc(p.name[0] || '?')}</span>
-      <span class="grow nm">${esc(p.name)}${p.id === ME ? ' <span class="tag s">toi</span>' : ''}</span>
-      ${p.bot ? '<span class="tag">fictif</span>' : ''}
-      ${p.id === S.hostId ? '<span class="tag b">hôte</span>' : ''}
+    ${PARTS.map(p => `<div class="row" style="padding:9px 0">
+      <span class="av ph">${esc((nameOf(p.user_id) || '?')[0])}</span>
+      <span class="grow nm">${esc(nameOf(p.user_id))}${p.user_id === ME ? ' <span class="tag s">toi</span>' : ''}</span>
+      ${p.user_id === G.admin_id ? '<span class="tag b">chef de gare</span>' : ''}
     </div>`).join('')}
   </div>
 
-  ${LIVE ? '' : `<button class="b full ghost" data-act="addbots">＋ Inviter 4 potes fictifs</button><div class="spacer"></div>`}
-
-  ${host
-    ? `<button class="b or full" data-act="start" ${S.players.length < 2 ? 'disabled' : ''}>
-         ${S.players.length < 2 ? 'Il faut au moins 2 joueurs' : 'Lancer le tour 1'}</button>`
-    : `<div class="empty">En attente de ${esc(nameOf(S, S.hostId))}…</div>`}
+  ${admin ? `
+    <h2>Durée de la course</h2>
+    <p class="sub">Le temps que tout le monde aura pour composer sa sélection. Prolongeable en route.</p>
+    <div class="chips">
+      ${durs.map(d => `<button class="chip ${d[0] === LMIN ? 'on' : ''}" data-act="dur" data-min="${d[0]}">${d[1]}</button>`).join('')}
+    </div>
+    <div class="spacer"></div>
+    <button class="b or full" data-act="launch" ${PARTS.length < 2 ? 'disabled' : ''}>
+      ${PARTS.length < 2 ? 'Il faut au moins 2 joueurs' : '🚦 Donner le départ'}</button>`
+  : `<div class="empty">Le départ sera donné par ${esc(nameOf(G.admin_id))}.<br>On peut monter à bord à tout moment, même en route.</div>`}
   <div class="spacer"></div>
-  <button class="b ghost full sm" data-act="leave">Quitter</button>`;
+  <button class="b ghost full sm" data-act="home">← Mes parties</button>`;
 }
 
-/* ---------- enchères ---------- */
-function viewBids(){
-  const me = P(S, ME);
-  if(!me) return '<div class="empty"><div class="g">Tu n’es plus dans cette partie.</div>'
-    + '<button class="b ghost sm" data-act="leave" style="margin-top:12px">Retour</button></div>';
-  const left = leftOf(S, ME), free = freeOf(S, ME), mine = bidsOf(S, ME);
-  const readyN = S.players.filter(p => p.ready).length;
-  const closed = left <= 0;
+/* ---------- ma sélection ---------- */
+function viewMine(){
+  const mine = myPicks();
+  const left = G.max_picks - mine.length;
+  const ph = phase();
+  const dead = mine.filter(p => p.dead);
 
-  const rows = mine.map(b => {
-    const c = S.celebs.find(x => x.id === b.celebId);
-    if(!c) return '';
-    return `<div class="tile"><div class="row">
-      ${avatar(c)}
-      <div class="grow"><div class="nm">${esc(c.name)}</div><div class="ds">${esc(c.desc)}</div></div>
-      <div style="text-align:right">
-        <div class="brass big num">${M(b.amount)}</div>
-        <div class="mut" style="font-size:11px">scellé</div>
-      </div>
-    </div></div>`;
-  }).join('');
+  const head = ph === 'choice'
+    ? `<div class="card gold" style="text-align:center">
+        <p class="mut">Fin de la course dans</p>
+        <div class="cdBig num" id="cd">${cdown(endsMs() - Date.now())}</div>
+        <div class="spacer"></div>
+        <div class="bar"><i style="width:${Math.round(mine.length / G.max_picks * 100)}%"></i></div>
+        <p class="mut" style="margin-top:8px">${mine.length}/${G.max_picks} réservées · premier arrivé, premier servi · tu peux encore tout changer</p>
+      </div>`
+    : `<div class="card gold"><div class="row">
+        <div class="grow"><div class="big">Saison ${G.season}</div>
+        <p class="mut">${mine.length}/${G.max_picks} têtes · vérification Wikidata quotidienne</p></div>
+        <div style="text-align:right"><div class="big brass num" style="font-size:28px">${ptsOf(ME)}</div>
+        <div class="mut" style="font-size:11px">pts</div></div>
+      </div></div>`;
 
-  return `
-  <div class="card gold">
-    <div class="row">
-      <div class="grow">
-        <div class="big">Tour ${S.round}</div>
-        <p class="mut">Mises secrètes. Révélation quand tout le monde est prêt.</p>
-      </div>
-      <div style="text-align:right">
-        <div class="brass big num">${M(free)}</div>
-        <div class="mut" style="font-size:11px">libre sur ${M(me.budget)}</div>
-      </div>
-    </div>
-    <div class="sep"></div>
-    <div class="row" style="font-size:13px">
-      <span class="tag ${closed ? 'm' : 'b'}">${left} enchère${left > 1 ? 's' : ''} possible${left > 1 ? 's' : ''}</span>
-      <span class="tag">${stableOf(S, ME).length}/${MAX} en écurie</span>
-      <span class="grow"></span>
-      <span class="dots">${S.players.map(p => `<span class="dot ${p.ready ? 'on' : ''}" title="${esc(p.name)}"></span>`).join('')}</span>
-    </div>
-  </div>
-
-  <h2>Tes mises de ce tour</h2>
-  <p class="sub">${mine.length ? 'Définitives : pas de surenchère.' : 'Rien pour l’instant.'}</p>
-  ${rows || `<div class="empty"><div class="g">Carnet vierge.</div>Ajoute une cible avec le bouton ci-dessous.</div>`}
-
-  <div class="sticky"><div class="in">
-    <button class="b or grow" data-act="search" ${closed ? 'disabled' : ''}>＋ Cible</button>
-    <button class="b ${me.ready ? '' : 'mort'} grow" data-act="ready">
-      ${me.ready ? '✓ Prêt · ' + readyN + '/' + S.players.length : 'Je suis prêt'}
-    </button>
-  </div></div>`;
-}
-
-/* ---------- révélation ---------- */
-function viewReveal(){
-  const pv = S.log[S.log.length - 1] || { round: S.round, lots: [] };
-  const mine = pv.lots.filter(l => l.winnerId === ME);
-  return `
-  <div class="card gold" style="text-align:center">
-    <p class="mut">Procès-verbal</p>
-    <div class="big" style="font-size:26px">Tour ${pv.round}</div>
-    <p class="mut" style="margin-top:4px">
-      ${pv.lots.filter(l => l.winner).length} adjudication(s) ·
-      ${mine.length ? '<span class="brass">' + mine.length + ' pour toi</span>' : 'rien pour toi'}
-    </p>
-  </div>
-
-  ${pv.lots.length ? pv.lots.map(l => `
-    <div class="tile ${l.winnerId === ME ? '' : ''}">
+  const tiles = mine.slice().sort((a, b) => (b.dead ? 1 : 0) - (a.dead ? 1 : 0) || b.value - a.value).map(p => `
+    <div class="tile ${p.dead ? 'dead' : ''}">
+      ${p.dead ? '<div class="stamp">Parti·e</div>' : ''}
       <div class="row">
-        ${avatar({thumb: l.thumb})}
+        ${avatar(p)}
         <div class="grow">
-          <div class="nm">${esc(l.celeb)}</div>
-          <div class="ds">${l.value} pt${l.value > 1 ? 's' : ''} en jeu</div>
+          <div class="nm">${esc(p.name)}</div>
+          <div class="ds">${p.dead
+            ? '✝ ' + fdate(p.death_date) + ' · ' + p.age_death + ' ans'
+            : esc(p.descr)}</div>
         </div>
-        ${l.winner
-          ? `<div style="text-align:right"><div class="brass num">${M(l.amount)}</div><div class="mut" style="font-size:11px">${esc(l.winner)}</div></div>`
-          : '<span class="tag m">invendu</span>'}
+        ${p.dead
+          ? '<span class="tag m">' + (p.points ? '+' + p.points + ' pts' : 'hors délai') + '</span>'
+          : '<span class="tag">' + p.value + ' pts</span>'}
+        ${ph === 'choice' && !p.dead ? '<button class="x" data-act="unpick" data-id="' + esc(p.id) + '" title="Rendre">✕</button>' : ''}
       </div>
-      ${l.offers.length > 1 ? `<div class="row wrap" style="margin-top:8px;gap:6px">
-        ${l.offers.map(o => `<span class="tag ${o.win ? 'b' : ''}" style="${o.win ? '' : 'text-decoration:line-through;opacity:.65'}">${esc(o.name)} ${M(o.amount)}</span>`).join('')}
-      </div>` : ''}
-    </div>`).join('')
-   : '<div class="empty"><div class="g">Personne n’a misé.</div>Tour blanc.</div>'}
+    </div>`).join('');
 
-  <div class="spacer"></div>
-  <button class="b or full" data-act="next">Tour ${S.round + 1} →</button>
-  <div class="spacer"></div>
-  <div class="row" style="gap:8px">
-    <button class="b ghost sm grow" data-act="tabrank">Classement</button>
-    <button class="b ghost sm grow" data-act="tabstable">Écuries</button>
-  </div>`;
+  return head
+    + '<h2>Ta sélection</h2>'
+    + `<p class="sub">${dead.length ? dead.length + ' départ' + (dead.length > 1 ? 's' : '') + ' · ' : ''}${ph === 'choice' ? 'Retire une tête et elle retourne au quai — quelqu’un peut la rafler.' : 'Figée, sauf places libres.'}</p>`
+    + (tiles || '<div class="empty"><div class="g">Personne à bord.</div>La course est lancée : réserve tes têtes.</div>')
+    + (ph === 'live' ? '<div class="spacer"></div><button class="b ghost full sm" data-act="check">↻ Vérifier les départs maintenant</button>' : '')
+    + '<div class="spacer"></div><button class="b ghost full sm" data-act="home">← Mes parties</button>'
+    + (left > 0
+       ? `<div class="sticky"><div class="in">
+            <button class="b or grow" data-act="search">＋ Réserver une tête (${left})</button>
+          </div></div>`
+       : '');
 }
 
-/* ---------- écuries ---------- */
-function viewStable(){
-  const order = S.players.slice().sort((a, b) => (a.id === ME ? -1 : b.id === ME ? 1 : 0));
+/* ---------- le quai (tout le monde) ---------- */
+function viewQuai(){
+  const order = PARTS.slice().sort((a, b) => (a.user_id === ME ? -1 : b.user_id === ME ? 1 : 0));
   return `
-  <h2>Les écuries</h2>
-  <p class="sub">Les décès sont vérifiés automatiquement sur Wikidata.</p>
-  <div class="row" style="gap:8px;margin-bottom:14px">
-    <button class="b sm ghost grow" data-act="check">↻ Vérifier maintenant</button>
-    ${LIVE ? '' : '<button class="b sm mort grow" data-act="simdeath">☠ Simuler un décès</button>'}
-  </div>
-  ${order.map(p => {
-    const st = stableOf(S, p.id);
+  <h2>Le quai</h2>
+  <p class="sub">Toutes les réservations sont publiques : une tête prise est prise.</p>
+  ${order.map(pa => {
+    const st = picksOf(pa.user_id);
     const dead = st.filter(c => c.dead);
     return `<div class="card">
       <div class="row" style="margin-bottom:10px">
         <div class="grow">
-          <div class="big">${esc(p.name)}${p.id === ME ? ' <span class="tag s">toi</span>' : ''}</div>
-          <div class="mut">${st.length}/${MAX} · ${M(p.budget)} restants · ${ptsOf(S, p.id)} pts</div>
+          <div class="big">${esc(nameOf(pa.user_id))}${pa.user_id === ME ? ' <span class="tag s">toi</span>' : ''}</div>
+          <div class="mut">${st.length}/${G.max_picks} · ${ptsOf(pa.user_id)} pts</div>
         </div>
         ${dead.length ? '<span class="tag m">' + dead.length + ' ✝</span>' : ''}
       </div>
-      ${st.length ? st.slice().sort((a, b) => (b.dead ? 1 : 0) - (a.dead ? 1 : 0) || b.value - a.value).map(c => `
-        <div class="tile ${c.dead ? 'dead' : ''}">
-          ${c.dead ? '<div class="stamp">Oups.</div>' : ''}
-          <div class="row">
-            ${avatar(c)}
-            <div class="grow">
-              <div class="nm">${esc(c.name)}</div>
-              <div class="ds">${c.dead
-                ? '✝ ' + (c.deathDate ? fdate(c.deathDate) + ' · ' : '') + c.ageDeath + ' ans'
-                : esc(c.desc)}</div>
-            </div>
-            ${c.dead
-              ? '<span class="tag m">+' + c.points + ' pts</span>'
-              : '<span class="tag">' + c.value + ' pts</span>'}
-          </div>
-        </div>`).join('')
-      : '<div class="empty">Écurie vide. Tout le monde va bien.</div>'}
+      ${st.length ? '<div class="row wrap" style="gap:6px">'
+        + st.slice().sort((a, b) => (b.dead ? 1 : 0) - (a.dead ? 1 : 0) || b.value - a.value)
+            .map(c => '<span class="tag ' + (c.dead ? 'm' : '') + '"'
+              + (c.dead ? ' style="text-decoration:line-through"' : '') + '>'
+              + esc(c.name) + ' · ' + (c.dead ? '+' + c.points : c.value) + '</span>').join('')
+        + '</div>'
+      : '<div class="empty" style="padding:14px">Rien réservé pour l’instant.</div>'}
     </div>`;
   }).join('')}`;
 }
 
 /* ---------- classement ---------- */
 function viewRank(){
-  const rows = S.players.map(p => ({
-    p, pts: ptsOf(S, p.id),
-    dead: stableOf(S, p.id).filter(c => c.dead).length,
-    size: stableOf(S, p.id).length
+  const rows = PARTS.map(pa => ({
+    uid: pa.user_id, pts: ptsOf(pa.user_id),
+    dead: picksOf(pa.user_id).filter(c => c.dead && c.points > 0).length,
+    size: picksOf(pa.user_id).length
   })).sort((a, b) => b.pts - a.pts || b.dead - a.dead || b.size - a.size);
   const top = Math.max(1, rows[0] ? rows[0].pts : 1);
   return `
-  <h2>Le carnet du jour</h2>
-  <p class="sub">Un décès à 90 ans ou plus vaut 1 point. Sinon : 90 − l’âge.</p>
+  <h2>Le tableau des départs</h2>
+  <p class="sub">Départ à 90 ans ou plus : 1 point. Sinon : 90 − l’âge. Rien si le décès précède ta réservation.</p>
   ${rows.map((r, i) => `
     <div class="card" style="padding:13px 16px">
       <div class="row">
         <span class="big" style="width:26px;color:${i === 0 && r.pts ? 'var(--brass)' : 'var(--dim)'}">${i + 1}</span>
         <div class="grow">
-          <div class="nm">${esc(r.p.name)}${r.p.id === ME ? ' <span class="tag s">toi</span>' : ''}</div>
-          <div class="mut" style="font-size:12px">${r.dead} ✝ · ${r.size}/${MAX} · ${M(r.p.budget)}</div>
+          <div class="nm">${esc(nameOf(r.uid))}${r.uid === ME ? ' <span class="tag s">toi</span>' : ''}</div>
+          <div class="mut" style="font-size:12px">${r.dead} ✝ · ${r.size}/${G.max_picks}</div>
         </div>
         <span class="big num" style="font-size:26px;color:${r.pts ? 'var(--brass)' : 'var(--dim)'}">${r.pts}</span>
       </div>
       <div class="bar" style="margin-top:9px"><i style="width:${Math.round(r.pts / top * 100)}%"></i></div>
     </div>`).join('')}
   <div class="spacer"></div>
-  ${S.log.length ? `<h2>Historique</h2><p class="sub">Les derniers procès-verbaux.</p>
-    ${S.log.slice().reverse().map(pv => `<div class="card">
-      <div class="big" style="font-size:16px;margin-bottom:6px">Tour ${pv.round}</div>
-      ${pv.lots.filter(l => l.winner).map(l => `<div class="row" style="font-size:13px;padding:3px 0">
-        <span class="grow">${esc(l.celeb)}</span><span class="brass num">${M(l.amount)}</span>
-        <span class="mut">${esc(l.winner)}</span></div>`).join('') || '<div class="mut">Aucune adjudication.</div>'}
-    </div>`).join('')}` : ''}
-  <div class="spacer"></div>
   <button class="b ghost full sm" data-act="rules">Règles</button>
   <div class="spacer"></div>
-  <button class="b ghost full sm" data-act="leave">Quitter la partie</button>`;
+  <button class="b ghost full sm" data-act="home">← Mes parties</button>`;
 }
 
 /* ══════════════════════════════════════════════════════════════
-   9. SHEET (recherche, mise, règles)
+   9. SHEETS
    ══════════════════════════════════════════════════════════════ */
 function openSheet(html){
   $('#sheet').innerHTML = '<div class="handle"></div>' + html;
@@ -963,8 +915,8 @@ function closeSheet(){
 
 function sheetSearch(){
   openSheet(`
-    <h2>Qui va nous manquer ?</h2>
-    <p class="sub">Recherche sur Wikipédia. Pas de page, pas de cible.</p>
+    <h2>Qui va nous quitter ?</h2>
+    <p class="sub">Recherche sur Wikipédia. Pas de page, pas de billet.</p>
     <input class="f" id="q" placeholder="Nom de la célébrité…" autocomplete="off" autocorrect="off">
     <div id="res" style="margin-top:12px"></div>`);
   const q = $('#q');
@@ -974,7 +926,7 @@ function sheetSearch(){
     const term = q.value.trim();
     clearTimeout(deb);
     if(term.length < 2){ $('#res').innerHTML = ''; return; }
-    $('#res').innerHTML = '<div class="mut" style="padding:10px 4px">Consultation de l’état civil…</div>';
+    $('#res').innerHTML = '<div class="mut" style="padding:10px 4px">Consultation du registre…</div>';
     deb = setTimeout(async () => {
       const mark = ++seq;
       try {
@@ -982,10 +934,15 @@ function sheetSearch(){
         if(mark !== seq) return;
         RES = r;
         $('#res').innerHTML = r.length
-          ? r.map((s, i) => `<button class="res" data-act="pick" data-i="${i}">
-              ${s.thumb ? '<img class="av" src="' + esc(s.thumb) + '" alt="">' : '<span class="av ph">✝</span>'}
-              <span class="grow"><span class="nm" style="display:block">${esc(s.name)}</span>
-              <span class="ds">${esc(s.desc)}</span></span></button>`).join('')
+          ? r.map((s, i) => {
+              const t = PICKS.find(p => p.qid === s.qid);
+              const taken = t ? (t.user_id === ME ? 'à toi' : 'pris·e — ' + nameOf(t.user_id)) : null;
+              return `<button class="res" data-act="pick" data-i="${i}" ${taken ? 'disabled' : ''}>
+                ${s.thumb ? '<img class="av" src="' + esc(s.thumb) + '" alt="">' : '<span class="av ph">🚂</span>'}
+                <span class="grow"><span class="nm" style="display:block">${esc(s.name)}</span>
+                <span class="ds">${esc(s.desc)}</span></span>
+                ${taken ? '<span class="tag m">' + esc(taken) + '</span>' : ''}</button>`;
+            }).join('')
           : '<div class="empty">Aucune page Wikipédia. Tonton Gérard, on a dit non.</div>';
       } catch(e){
         if(mark !== seq) return;
@@ -998,16 +955,15 @@ function sheetSearch(){
 async function pickResult(i){
   const s = RES[i];
   if(!s) return;
-  openSheet('<div class="empty"><div class="g">' + esc(s.name) + '</div>Consultation de l’état civil…</div>');
+  openSheet('<div class="empty"><div class="g">' + esc(s.name) + '</div>Consultation du registre…</div>');
   let d = {};
   try { d = (await wikiDates([s.qid]))[s.qid] || {}; }
   catch(e){ openSheet('<div class="empty"><div class="g">Wikidata injoignable.</div>Réessaie.</div>'); return; }
 
   if(d.death){
     const a = ageAt(d.birth, d.death);
-    return openSheet(`<div class="empty"><div class="g">Trop tard.</div>
-      ${esc(s.name)} est décédé·e le ${fdate(d.death)}${a ? ' à ' + a + ' ans' : ''}.
-      Il fallait jouer plus vite.</div>
+    return openSheet(`<div class="empty"><div class="g">Le train est déjà passé.</div>
+      ${esc(s.name)} est décédé·e le ${fdate(d.death)}${a ? ' à ' + a + ' ans' : ''}.</div>
       <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
   }
   if(!d.birth){
@@ -1015,23 +971,16 @@ async function pickResult(i){
       Wikidata ne documente pas ${esc(s.name)}. Choisis quelqu’un de mieux fiché.</div>
       <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
   }
-  const taken = S.celebs.find(c => c.qid === s.qid && (c.ownerId || c.dead));
+  const taken = PICKS.find(p => p.qid === s.qid);
   if(taken){
-    return openSheet(`<div class="empty"><div class="g">Déjà pris.</div>
-      ${esc(s.name)} appartient à ${esc(nameOf(S, taken.ownerId))}. Exclusivité, règle n°4.</div>
+    return openSheet(`<div class="empty"><div class="g">Déjà réservé·e.</div>
+      ${esc(s.name)} voyage avec ${esc(nameOf(taken.user_id))}. Exclusivité, règle n°3.</div>
       <button class="b full ghost" data-act="search">Chercher quelqu’un d’autre</button>`);
   }
 
   const age = ageAt(d.birth, TODAY);
   const value = ptsFor(age);
-  DRAFT = { qid: s.qid, name: s.name, desc: s.desc, thumb: s.thumb, birth: d.birth, age, value, amount: value };
-  sheetBid();
-}
-
-function sheetBid(){
-  const free = freeOf(S, ME);
-  const opts = [...new Set([DRAFT.value, Math.ceil(DRAFT.value * 1.25), Math.ceil(DRAFT.value * 1.6), Math.ceil(DRAFT.value * 2)])]
-    .filter(v => v >= 1 && v <= free);
+  DRAFT = { qid: s.qid, name: s.name, desc: s.desc, thumb: s.thumb, birth: d.birth, age, value };
   openSheet(`
     <div class="row" style="gap:14px;margin-bottom:14px">
       ${avatar(DRAFT, 'lg')}
@@ -1047,40 +996,52 @@ function sheetBid(){
         <div class="big brass">${DRAFT.value} pts</div></div>
       </div>
       <p class="mut" style="margin-top:8px;font-size:12px">
-        S’il ou elle nous quitte cette saison, tu encaisses ${DRAFT.value} points.</p>
+        Si le grand départ a lieu après ta réservation, tu encaisses ${DRAFT.value} points.
+        Premier arrivé, premier servi : quelqu’un peut te griller pendant que tu hésites.</p>
     </div>
-
-    <h2>Ta mise</h2>
-    <p class="sub">${M(free)} libres. La plus haute mise emporte le lot. Aucune surenchère possible.</p>
-    <div class="chips" id="chips">
-      ${opts.map(v => `<button class="chip ${v === DRAFT.amount ? 'on' : ''}" data-act="amt" data-v="${v}">${M(v)}</button>`).join('')}
-    </div>
-    <input class="f num" id="amt" type="number" min="1" max="${free}" inputmode="numeric" value="${DRAFT.amount}" placeholder="Autre montant">
-    <div class="spacer"></div>
-    <button class="b or full" data-act="seal" ${free < 1 ? 'disabled' : ''}>🕯 Sceller l’enchère</button>
+    <button class="b or full" data-act="reserve">🎫 Réserver — c’est exclusif</button>
     <div class="spacer"></div>
     <button class="b ghost full sm" data-act="search">Annuler</button>`);
-
-  $('#amt').addEventListener('input', e => {
-    DRAFT.amount = parseInt(e.target.value, 10) || 0;
-    document.querySelectorAll('#chips .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === DRAFT.amount));
-  });
 }
 
 function sheetRules(){
   openSheet(`
     <h2>Le règlement</h2>
-    <p class="sub">Lu et approuvé devant notaire. Enfin, devant Kevin.</p>
+    <p class="sub">Affiché en gare. Le chef de gare fait foi.</p>
     <ol class="rules">
       <li>La cible doit avoir une <b>page Wikipédia</b>. On ne choisit que dans les résultats de recherche.</li>
-      <li>Décès à <b>90 ans ou plus : 1 point</b>. Sinon, <b>90 − l’âge</b> (47 ans = 43 points). Le prix indicatif en millions est égal aux points.</li>
-      <li><b>${M(BUDGET)}</b> de budget pour la saison, <b>${MAX} têtes</b> maximum.</li>
-      <li>Une cible adjugée est <b>exclusive</b> : plus personne ne peut la prendre.</li>
-      <li>Chaque tour, tu mises <b>en secret</b> sur autant de cibles que de places libres dans ton écurie. Une mise est <b>définitive</b>. Quand tout le monde est prêt, tout est révélé : <b>la plus haute mise gagne</b>, égalité départagée par la première posée. Les perdants ne paient rien.</li>
-      <li>La saison court du <b>1ᵉʳ janvier au 31 décembre</b>. Les décès sont vérifiés sur Wikidata, personne ne triche.</li>
+      <li>Chacun compose une sélection de <b>${G ? G.max_picks : 20} têtes maximum</b>. Pas d’enchères, pas de budget : il suffit d’être le premier.</li>
+      <li>Une tête réservée est <b>exclusive</b> : plus personne d’autre ne peut la prendre. Premier arrivé, premier servi.</li>
+      <li>Au lancement, le chef de gare ouvre une <b>phase de choix à durée limitée</b>. Pendant cette phase, on peut réserver ET rendre ses têtes. Après, c’est figé — on ne peut plus que compléter les places libres.</li>
+      <li>Départ à <b>90 ans ou plus : 1 point</b>. Sinon, <b>90 − l’âge</b> (47 ans = 43 points). Un décès <b>antérieur à ta réservation</b> ne rapporte rien — on peut monter dans le train en marche, mais on ne rattrape pas les wagons partis.</li>
+      <li>Les départs sont vérifiés sur <b>Wikidata</b>, une fois par jour, automatiquement. Personne ne triche.</li>
     </ol>
     <p class="mut" style="text-align:center;font-family:var(--display);font-style:italic;margin:18px 0 6px">
-      « Ils sont partis trop tôt. Sauf pour nos scores. »</p>
+      « Attention au départ. »</p>
+    <button class="b full ghost" data-act="closesheet">Fermer</button>`);
+}
+
+function sheetAdmin(){
+  const ph = phase();
+  openSheet(`
+    <h2>Chef de gare</h2>
+    <p class="sub">Réservé à l’organisateur du tournoi.</p>
+    ${ph === 'choice' ? `
+      <button class="b full mort" data-act="closephase">🛑 Clore la phase de choix maintenant</button>
+      <div class="spacer"></div>
+      <div class="row" style="gap:8px">
+        <button class="b ghost grow sm" data-act="extend" data-min="60">＋1 h</button>
+        <button class="b ghost grow sm" data-act="extend" data-min="1440">＋24 h</button>
+      </div><div class="sep"></div>` : ''}
+    ${ph === 'live' ? `
+      <button class="b full ghost" data-act="forcecheck">↻ Relancer une vérification Wikidata</button>
+      <div class="sep"></div>` : ''}
+    <p class="mut" style="margin-bottom:8px">Sortir un joueur (ses réservations retournent au quai) :</p>
+    ${PARTS.filter(p => p.user_id !== ME).map(p => `<div class="row" style="padding:7px 0">
+      <span class="grow">${esc(nameOf(p.user_id))} <span class="mut">· ${picksOf(p.user_id).length} têtes</span></span>
+      <button class="b sm mort" data-act="kick" data-uid="${esc(p.user_id)}">Sortir</button>
+    </div>`).join('') || '<p class="mut">Personne d’autre à bord.</p>'}
+    <div class="spacer"></div>
     <button class="b full ghost" data-act="closesheet">Fermer</button>`);
 }
 
@@ -1094,68 +1055,76 @@ document.addEventListener('click', e => {
 
   if(a === 'closesheet')  return closeSheet();
   if(a === 'rules')       return sheetRules();
+  if(a === 'admin')       return sheetAdmin();
   if(a === 'search')      return sheetSearch();
   if(a === 'pick')        return pickResult(+el.dataset.i);
-  if(a === 'amt'){ DRAFT.amount = +el.dataset.v; return sheetBid(); }
-  if(a === 'seal')        return sealBid();
-  if(a === 'ready')       return toggleReady();
-  if(a === 'start')       return startGame();
-  if(a === 'next')        return nextRound();
-  if(a === 'addbots')     return addBots(4);
-  if(a === 'simdeath')    return simDeath();
-  if(a === 'check'){ toast('Consultation de Wikidata…'); return checkDeaths(); }
-  if(a === 'leave')       return leaveGame();
-  if(a === 'tab'){
-    tab = el.dataset.tab;
-    if(S && S.phase === 'reveal') peek = (tab !== 'bids');   // « Enchères » ramène au procès-verbal
-    return render();
-  }
-  if(a === 'tabrank'){ tab = 'rank'; peek = true; return render(); }
-  if(a === 'tabstable'){ tab = 'stable'; peek = true; return render(); }
+  if(a === 'reserve'){ const done = busy(el, 'Réservation…'); return addPick().finally(done); }
+  if(a === 'unpick')      return removePick(el.dataset.id);
+  if(a === 'check'){ toast('Consultation de Wikidata…'); return checkDeaths(true); }
+  if(a === 'forcecheck'){ closeSheet(); toast('Consultation de Wikidata…'); return checkDeaths(true); }
+  if(a === 'home')        return goHome();
+  if(a === 'signout')     return signOut();
+  if(a === 'tab'){ tab = el.dataset.tab; return render(); }
+  if(a === 'dur'){ LMIN = +el.dataset.min; return render(); }
+  if(a === 'launch'){ const done = busy(el, 'Départ…'); return launchGame(LMIN).finally(done); }
+  if(a === 'closephase')  return closePhase();
+  if(a === 'extend')      return extendPhase(+el.dataset.min);
+  if(a === 'kick')        return kick(el.dataset.uid);
+  if(a === 'open'){ const done = busy(el); return openGame(el.dataset.id).catch(e2 => fail('Ouverture', e2)).finally(done); }
 
   if(a === 'share'){
-    const txt = 'Oups. — rejoins la partie avec le code ' + S.code + ' : ' + location.href;
+    const txt = 'Le Grand Départ — monte à bord avec le code ' + G.code + ' : ' + location.href.split('#')[0];
     if(navigator.share) navigator.share({ text: txt }).catch(() => {});
     else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(() => toast('Code copié.'));
-    else toast('Code : ' + S.code);
+    else toast('Code : ' + G.code);
     return;
   }
+
+  if(a === 'signin' || a === 'signup'){
+    const em = ($('#iMail').value || '').trim().toLowerCase();
+    const pw = $('#iPass').value || '';
+    if(!/.+@.+\..+/.test(em)) return toast('Il faut un email valide.', true);
+    if(pw.length < 6) return toast('6 caractères minimum pour le mot de passe.', true);
+    const done = busy(el);
+    return (a === 'signin' ? signIn(em, pw) : signUp(em, pw))
+      .catch(e2 => fail('Compte', e2)).finally(done);
+  }
+  if(a === 'pseudo'){
+    const ps = ($('#iPseudo').value || '').trim();
+    if(!ps) return toast('Il faut un pseudo.', true);
+    const done = busy(el);
+    return savePseudo(ps).finally(done);
+  }
   if(a === 'create'){
-    const n = ($('#iName').value || '').trim();
-    if(!n) return toast('Il faut un prénom.', true);
-    return createGame(n);
+    const nm = ($('#iGName').value || '').trim();
+    const done = busy(el, 'Création…');
+    return createGame(nm).catch(e2 => fail('Création de la partie', e2)).finally(done);
   }
   if(a === 'join'){
-    const n = ($('#iName').value || '').trim();
     const c = ($('#iCode').value || '').trim();
-    if(!n) return toast('Il faut un prénom.', true);
     if(c.length !== 4) return toast('Le code fait 4 lettres.', true);
-    return joinGame(c, n);
-  }
-  if(a === 'resume'){
-    const n = (LS.get('oups:name') || 'moi');
-    return joinGame(el.dataset.code, n);
+    const done = busy(el, 'Embarquement…');
+    return joinByCode(c).catch(e2 => fail('Embarquement', e2)).finally(done);
   }
 });
 
 /* ══════════════════════════════════════════════════════════════
    11. BOOT
    ══════════════════════════════════════════════════════════════ */
-(async () => {
-  render();
-  // reprise auto si on revient sur une partie en cours dans ce navigateur
-  const last = LS.get('oups:last');
-  const name = LS.get('oups:name');
-  if(last && name){
-    try {
-      const n = await makeNet(last);
-      const st = await n.load();
-      const me = LS.get('oups:me:' + last);
-      if(st && me && P(st, me)){ net = n; ME = me; await attach(st); return; }
-    } catch(e){}
-  }
-})();
+sb.auth.onAuthStateChange((ev) => {
+  if(ev === 'SIGNED_OUT'){ ME = null; PROFILE = null; G = null; render(); }
+});
 
+(async () => {
+  render();   // squelette pendant le chargement de la session
+  const { data:{ session } } = await sb.auth.getSession();
+  if(session){
+    await afterAuth();
+    const last = LS.get('gd:last');
+    if(last && PROFILE && MYGAMES.some(g => g.id === last)){
+      try{ await openGame(last); }catch(e){ render(); }
+    }
+  }
 })();
 </script>
 </body>
